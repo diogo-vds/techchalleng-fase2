@@ -1,4 +1,4 @@
-package com.postech.restaurante;
+package com.postech.techchallenge.fase2;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
