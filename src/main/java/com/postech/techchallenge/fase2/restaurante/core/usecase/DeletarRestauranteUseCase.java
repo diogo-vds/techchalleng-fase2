@@ -1,2 +1,22 @@
-package com.postech.techchallenge.fase2.restaurante.core.usecase;public class DeletarRestauranteUseCase {
+package com.postech.techchallenge.fase2.restaurante.core.usecase;
+
+import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
+
+import java.util.UUID;
+
+public class DeletarRestauranteUseCase {
+
+    private final RestauranteGateway gateway;
+
+    public DeletarRestauranteUseCase(RestauranteGateway gateway) {
+        this.gateway = gateway;
+    }
+
+    public void executar(UUID id) {
+
+        gateway.buscarPorId(id)
+                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
+
+        gateway.deletar(id);
+    }
 }
