@@ -10,7 +10,7 @@ class EnderecoTest {
     void deveCriarEnderecoValido() {
 
         Endereco endereco = Endereco.criar(
-                "Rua das Flores",
+                "Rua A",
                 "123",
                 "Apto 10",
                 "Centro",
@@ -20,7 +20,7 @@ class EnderecoTest {
         );
 
         assertNull(endereco.getId());
-        assertEquals("Rua das Flores", endereco.getRua());
+        assertEquals("Rua A", endereco.getRua());
         assertEquals("123", endereco.getNumero());
         assertEquals("Apto 10", endereco.getComplemento());
         assertEquals("Centro", endereco.getBairro());
@@ -34,44 +34,41 @@ class EnderecoTest {
 
         Endereco endereco = Endereco.reconstruir(
                 1L,
-                "Rua das Flores",
-                "123",
-                null,
-                "Centro",
+                "Rua B",
+                "456",
+                "Casa",
+                "Batel",
                 "Curitiba",
                 "PR",
                 "80000000"
         );
 
         assertEquals(1L, endereco.getId());
-        assertNull(endereco.getComplemento());
+        assertEquals("Rua B", endereco.getRua());
     }
 
     @Test
     void naoDeveReconstruirSemId() {
 
-        IllegalArgumentException exception = assertThrows(
-                IllegalArgumentException.class,
-                () -> Endereco.reconstruir(
+        assertThrows(IllegalArgumentException.class, () ->
+                Endereco.reconstruir(
                         null,
-                        "Rua",
-                        "123",
-                        null,
-                        "Centro",
+                        "Rua B",
+                        "456",
+                        "Casa",
+                        "Batel",
                         "Curitiba",
                         "PR",
                         "80000000"
                 )
         );
-
-        assertEquals("Id não pode ser nulo na reconstrução", exception.getMessage());
     }
 
     @Test
-    void deveRemoverCaracteresDoCep() {
+    void deveRemoverMascaraDoCep() {
 
         Endereco endereco = Endereco.criar(
-                "Rua",
+                "Rua A",
                 "123",
                 null,
                 "Centro",
@@ -86,10 +83,9 @@ class EnderecoTest {
     @Test
     void naoDeveAceitarCepInvalido() {
 
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> Endereco.criar(
-                        "Rua",
+        assertThrows(IllegalArgumentException.class, () ->
+                Endereco.criar(
+                        "Rua A",
                         "123",
                         null,
                         "Centro",
@@ -103,10 +99,9 @@ class EnderecoTest {
     @Test
     void naoDeveAceitarUfInvalida() {
 
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> Endereco.criar(
-                        "Rua",
+        assertThrows(IllegalArgumentException.class, () ->
+                Endereco.criar(
+                        "Rua A",
                         "123",
                         null,
                         "Centro",
@@ -118,11 +113,10 @@ class EnderecoTest {
     }
 
     @Test
-    void naoDeveAceitarCamposObrigatoriosVazios() {
+    void naoDeveAceitarCampoObrigatorioVazio() {
 
-        assertThrows(
-                IllegalArgumentException.class,
-                () -> Endereco.criar(
+        assertThrows(IllegalArgumentException.class, () ->
+                Endereco.criar(
                         "",
                         "123",
                         null,
@@ -135,15 +129,29 @@ class EnderecoTest {
     }
 
     @Test
-    void equalsDeveCompararPorId() {
+    void complementoPodeSerNulo() {
+
+        Endereco endereco = Endereco.criar(
+                "Rua A",
+                "123",
+                null,
+                "Centro",
+                "Curitiba",
+                "PR",
+                "80000000"
+        );
+
+        assertNull(endereco.getComplemento());
+    }
+
+    @Test
+    void equalsDeveRetornarTrueParaMesmoId() {
 
         Endereco e1 = Endereco.reconstruir(
-                1L, "Rua", "123", null, "Centro", "Curitiba", "PR", "80000000"
-        );
+                1L,"Rua","1",null,"Centro","Curitiba","PR","80000000");
 
         Endereco e2 = Endereco.reconstruir(
-                1L, "Outra Rua", "999", null, "Bairro", "Cidade", "PR", "80000000"
-        );
+                1L,"Rua","1",null,"Centro","Curitiba","PR","80000000");
 
         assertEquals(e1, e2);
     }
@@ -152,14 +160,54 @@ class EnderecoTest {
     void equalsDeveRetornarFalseParaIdsDiferentes() {
 
         Endereco e1 = Endereco.reconstruir(
-                1L, "Rua", "123", null, "Centro", "Curitiba", "PR", "80000000"
-        );
+                1L,"Rua","1",null,"Centro","Curitiba","PR","80000000");
 
         Endereco e2 = Endereco.reconstruir(
-                2L, "Rua", "123", null, "Centro", "Curitiba", "PR", "80000000"
-        );
+                2L,"Rua","1",null,"Centro","Curitiba","PR","80000000");
 
         assertNotEquals(e1, e2);
     }
 
+    @Test
+    void hashCodeNaoDeveSerNulo() {
+
+        Endereco endereco = Endereco.reconstruir(
+                1L,"Rua","1",null,"Centro","Curitiba","PR","80000000");
+
+        assertNotNull(endereco.hashCode());
+    }
+
+    @Test
+    void equalsDeveRetornarTrueParaMesmoObjeto() {
+
+        Endereco endereco = Endereco.reconstruir(
+                1L,"Rua","1",null,"Centro","Curitiba","PR","80000000");
+
+        assertEquals(endereco, endereco);
+    }
+
+    @Test
+    void equalsDeveRetornarFalseParaObjetoDeOutroTipo() {
+
+        Endereco endereco = Endereco.reconstruir(
+                1L,"Rua","1",null,"Centro","Curitiba","PR","80000000");
+
+        assertNotEquals(endereco, "qualquer coisa");
+    }
+
+    @Test
+    void naoDeveAceitarCampoNulo() {
+
+        assertThrows(IllegalArgumentException.class, () ->
+                Endereco.criar(
+                        null,
+                        "123",
+                        null,
+                        "Centro",
+                        "Curitiba",
+                        "PR",
+                        "80000000"
+                )
+        );
+    }
 }

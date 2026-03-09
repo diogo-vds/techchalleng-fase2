@@ -110,4 +110,18 @@ class AtualizarEnderecoUseCaseTest {
         verify(enderecoGateway, times(1)).buscarPorId(1L);
         verify(enderecoGateway, never()).salvar(any());
     }
+
+    @Test
+    void deveLancarExcecaoQuandoInputForNulo() {
+
+        IllegalArgumentException exception = assertThrows(
+                IllegalArgumentException.class,
+                () -> useCase.executar(null)
+        );
+
+        assertEquals("Input não pode ser nulo", exception.getMessage());
+
+        verify(enderecoGateway, never()).buscarPorId(any());
+        verify(enderecoGateway, never()).salvar(any());
+    }
 }
