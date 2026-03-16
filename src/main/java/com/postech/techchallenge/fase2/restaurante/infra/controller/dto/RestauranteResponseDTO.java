@@ -25,10 +25,9 @@ public class RestauranteResponseDTO {
     @JsonProperty("dono_id")
     private UUID donoId;
 
-    // Construtor padrão
+
     public RestauranteResponseDTO() {}
 
-    // Construtor que converte do domínio para DTO
     public RestauranteResponseDTO(Restaurante restaurante) {
         this.id = restaurante.getId();
         this.nome = restaurante.getNome();

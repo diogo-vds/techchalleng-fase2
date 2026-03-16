@@ -5,7 +5,6 @@ import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGatew
 import com.postech.techchallenge.fase2.restaurante.core.usecase.*;
 import com.postech.techchallenge.fase2.restaurante.infra.controller.dto.RestauranteRequestDTO;
 import com.postech.techchallenge.fase2.restaurante.infra.controller.dto.RestauranteResponseDTO;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,12 +22,16 @@ public class RestauranteController {
     private final AtualizarRestauranteUseCase atualizarRestauranteUseCase;
     private final DeletarRestauranteUseCase deletarRestauranteUseCase;
 
-    @Autowired
-    public RestauranteController(RestauranteGateway restauranteGateway) {
-        this.criarRestauranteUseCase = new CriarRestauranteUseCase(restauranteGateway);
-        this.recuperarRestauranteUseCase = new RecuperarRestauranteUseCase(restauranteGateway);
-        this.atualizarRestauranteUseCase = new AtualizarRestauranteUseCase(restauranteGateway);
-        this.deletarRestauranteUseCase = new DeletarRestauranteUseCase(restauranteGateway);
+
+    public RestauranteController(
+            CriarRestauranteUseCase criarRestauranteUseCase,
+            RecuperarRestauranteUseCase recuperarRestauranteUseCase,
+            AtualizarRestauranteUseCase atualizarRestauranteUseCase,
+            DeletarRestauranteUseCase deletarRestauranteUseCase) {
+        this.criarRestauranteUseCase = criarRestauranteUseCase;
+        this.recuperarRestauranteUseCase = recuperarRestauranteUseCase;
+        this.atualizarRestauranteUseCase = atualizarRestauranteUseCase;
+        this.deletarRestauranteUseCase = deletarRestauranteUseCase;
     }
 
     @PostMapping

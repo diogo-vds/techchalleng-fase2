@@ -20,10 +20,10 @@ public class RestauranteRequestDTO {
     @JsonProperty("dono_id")
     private UUID donoId;
 
-    // Construtor padrão
+
     public RestauranteRequestDTO() {}
 
-    // Construtor com todos os campos
+
     public RestauranteRequestDTO(String nome, String endereco, String tipoCozinha,
                                  String horarioFuncionamento, UUID donoId) {
         this.nome = nome;
@@ -33,7 +33,7 @@ public class RestauranteRequestDTO {
         this.donoId = donoId;
     }
 
-    // Getters e Setters
+
     public String getNome() {
         return nome;
     }

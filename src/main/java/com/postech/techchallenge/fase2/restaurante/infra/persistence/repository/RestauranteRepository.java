@@ -1,4 +1,4 @@
-package com.postech.techchallenge.fase2.restaurante.infra.db;
+package com.postech.techchallenge.fase2.restaurante.infra.persistence.repository;
 
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 import org.springframework.data.jpa.repository.JpaRepository;
