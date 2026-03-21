@@ -15,7 +15,7 @@ public class UsuarioEntity {
     private String telefone;
     private String cpf;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "tipo_usuario_id", nullable = false)
     private TipoUsuarioEntity tipoUsuario;
 
