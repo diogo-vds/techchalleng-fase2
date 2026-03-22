@@ -5,7 +5,6 @@ import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
 
-import java.util.UUID;
 
 public class CriarRestauranteUseCase {
 
@@ -20,7 +19,7 @@ public class CriarRestauranteUseCase {
                                 String tipoCozinha,
                                 Cardapio cardapio,
                                 String horarioFuncionamento,
-                                UUID donoId) {
+                                Long donoId) {
 
         validarDadosObrigatorios(nome, endereco, tipoCozinha, horarioFuncionamento, donoId);
 
@@ -40,7 +39,7 @@ public class CriarRestauranteUseCase {
                                           Endereco endereco,
                                           String tipoCozinha,
                                           String horarioFuncionamento,
-                                          UUID donoId) {
+                                          Long donoId) {
         if (nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("Nome do restaurante é obrigatório");
         }

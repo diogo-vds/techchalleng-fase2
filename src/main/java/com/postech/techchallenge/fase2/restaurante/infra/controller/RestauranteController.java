@@ -95,8 +95,6 @@ public class RestauranteController {
             @PathVariable Long id,
             @RequestBody RestauranteRequestDTO request) {
         try {
-
-
             Restaurante restaurante = atualizarRestauranteUseCase.executar(
                     id,
                     request.getNome(),

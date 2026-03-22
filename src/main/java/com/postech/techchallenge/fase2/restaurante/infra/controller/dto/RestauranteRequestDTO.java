@@ -2,14 +2,10 @@ package com.postech.techchallenge.fase2.restaurante.infra.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
-import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioInput;
 import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
-import com.postech.techchallenge.fase2.endereco.core.dto.EnderecoInput;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-
-import java.util.UUID;
 
 public class RestauranteRequestDTO {
 
@@ -36,7 +32,8 @@ public class RestauranteRequestDTO {
 
     @NotNull(message = "ID do dono é obrigatório")
     @JsonProperty("dono_id")
-    private UUID donoId;
+    private Long donoId;
+
 
     public RestauranteRequestDTO() {}
 
@@ -45,7 +42,7 @@ public class RestauranteRequestDTO {
                                  String tipoCozinha,
                                  Cardapio cardapio,
                                  String horarioFuncionamento,
-                                 UUID donoId) {
+                                 Long donoId) {
         this.nome = nome;
         this.endereco = endereco;
         this.tipoCozinha = tipoCozinha;
@@ -53,6 +50,7 @@ public class RestauranteRequestDTO {
         this.horarioFuncionamento = horarioFuncionamento;
         this.donoId = donoId;
     }
+
 
     public String getNome() {
         return nome;
@@ -94,11 +92,11 @@ public class RestauranteRequestDTO {
         this.horarioFuncionamento = horarioFuncionamento;
     }
 
-    public UUID getDonoId() {
+    public Long getDonoId() {
         return donoId;
     }
 
-    public void setDonoId(UUID donoId) {
+    public void setDonoId(Long donoId) {
         this.donoId = donoId;
     }
 }

@@ -2,7 +2,6 @@ package com.postech.techchallenge.fase2.restaurante.core.usecase;
 
 import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
 
-import java.util.UUID;
 
 public class DeletarRestauranteUseCase {
 

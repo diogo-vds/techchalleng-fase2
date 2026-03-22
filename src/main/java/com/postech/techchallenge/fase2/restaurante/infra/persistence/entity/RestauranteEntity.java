@@ -5,8 +5,6 @@ import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioInput;
 import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
 import jakarta.persistence.*;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "restaurante")
 public class RestauranteEntity {
@@ -25,7 +23,7 @@ public class RestauranteEntity {
     @Column(nullable = false)
     private String horarioFuncionamento;
     @Column(nullable = false)
-    private UUID donoId;
+    private Long donoId;
 
     public Long getId() {
         return id;
@@ -75,11 +73,11 @@ public class RestauranteEntity {
         this.horarioFuncionamento = horarioFuncionamento;
     }
 
-    public UUID getDonoId() {
+    public Long getDonoId() {
         return donoId;
     }
 
-    public void setDonoId(UUID donoId) {
+    public void setDonoId(Long donoId) {
         this.donoId = donoId;
     }
 }

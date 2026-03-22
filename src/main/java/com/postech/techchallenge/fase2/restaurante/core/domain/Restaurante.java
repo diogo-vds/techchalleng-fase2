@@ -3,8 +3,6 @@ package com.postech.techchallenge.fase2.restaurante.core.domain;
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
 import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
 
-import java.util.UUID;
-
 public class Restaurante {
 
     private Long id;
@@ -13,7 +11,7 @@ public class Restaurante {
     private String tipoCozinha;
     private Cardapio cardapio;
     private String horarioFuncionamento;
-    private UUID donoId;
+    private Long donoId;
 
     public Restaurante(Long id,
                        String nome,
@@ -21,7 +19,7 @@ public class Restaurante {
                        String tipoCozinha,
                        Cardapio cardapio,
                        String horarioFuncionamento,
-                       UUID donoId) {
+                       Long donoId) {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;
@@ -36,7 +34,7 @@ public class Restaurante {
                        String tipoCozinha,
                        Cardapio cardapio,
                        String horarioFuncionamento,
-                       UUID donoId) {
+                       Long donoId) {
         this.nome = nome;
         this.endereco = endereco;
         this.cardapio = cardapio;
@@ -65,7 +63,7 @@ public class Restaurante {
         return horarioFuncionamento;
     }
 
-    public UUID getDonoId() {
+    public Long getDonoId() {
         return donoId;
     }
 
