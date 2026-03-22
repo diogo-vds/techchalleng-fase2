@@ -12,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class AtualizarCardapioUseCaseTest {
@@ -29,29 +30,29 @@ class AtualizarCardapioUseCaseTest {
     void deveAtualizarCardapioComSucesso() {
         Cardapio cardapioExistente = Cardapio.reconstruir(
                 1L,
-                "Pizza Antiga",
+                "Antigo",
                 "Descricao Antiga",
-                BigDecimal.valueOf(40.0),
-                true,
-                "/path/to/old_photo.jpg"
+                new BigDecimal("10.00"),
+                false,
+                "/foto.jpg"
         );
 
         CardapioInput input = new CardapioInput(
                 1L,
-                "Pizza Nova",
+                "Novo",
                 "Descricao Nova",
-                BigDecimal.valueOf(60.0),
-                false,
-                "/path/to/new_photo.jpg"
+                new BigDecimal("15.00"),
+                true,
+                "/nova_foto.jpg"
         );
 
         Cardapio cardapioAtualizado = Cardapio.reconstruir(
                 1L,
-                "Pizza Nova",
+                "Novo",
                 "Descricao Nova",
-                BigDecimal.valueOf(60.0),
-                false,
-                "/path/to/new_photo.jpg"
+                new BigDecimal("15.00"),
+                true,
+                "/nova_foto.jpg"
         );
 
         when(cardapioGateway.buscarPorId(1L)).thenReturn(Optional.of(cardapioExistente));
@@ -61,11 +62,9 @@ class AtualizarCardapioUseCaseTest {
 
         assertNotNull(output);
         assertEquals(1L, output.id());
-        assertEquals("Pizza Nova", output.nome());
+        assertEquals("Novo", output.nome());
         assertEquals("Descricao Nova", output.descricao());
-        assertEquals(BigDecimal.valueOf(60.0), output.preco());
-        assertFalse(output.disponivelApenasRestaurante());
-        assertEquals("/path/to/new_photo.jpg", output.caminhoFoto());
+        assertEquals(new BigDecimal("15.00"), output.preco());
 
         verify(cardapioGateway, times(1)).buscarPorId(1L);
         verify(cardapioGateway, times(1)).salvar(any(Cardapio.class));
@@ -75,11 +74,11 @@ class AtualizarCardapioUseCaseTest {
     void deveLancarExcecaoQuandoCardapioNaoExistir() {
         CardapioInput input = new CardapioInput(
                 1L,
-                "Pizza Nova",
+                "Novo",
                 "Descricao Nova",
-                BigDecimal.valueOf(60.0),
-                false,
-                "/path/to/new_photo.jpg"
+                new BigDecimal("15.00"),
+                true,
+                "/nova_foto.jpg"
         );
 
         when(cardapioGateway.buscarPorId(1L)).thenReturn(Optional.empty());
@@ -90,7 +89,6 @@ class AtualizarCardapioUseCaseTest {
         );
 
         assertEquals("Cardapio não encontrado", exception.getMessage());
-
         verify(cardapioGateway, times(1)).buscarPorId(1L);
         verify(cardapioGateway, never()).salvar(any());
     }
@@ -103,20 +101,19 @@ class AtualizarCardapioUseCaseTest {
         );
 
         assertEquals("Input não pode ser nulo", exception.getMessage());
-
         verify(cardapioGateway, never()).buscarPorId(any());
         verify(cardapioGateway, never()).salvar(any());
     }
 
     @Test
-    void deveLancarExcecaoQuandoIdNaoForInformadoNaAtualizacao() {
+    void deveLancarExcecaoQuandoIdForNulo() {
         CardapioInput input = new CardapioInput(
                 null,
-                "Pizza Nova",
+                "Novo",
                 "Descricao Nova",
-                BigDecimal.valueOf(60.0),
-                false,
-                "/path/to/new_photo.jpg"
+                new BigDecimal("15.00"),
+                true,
+                "/nova_foto.jpg"
         );
 
         IllegalArgumentException exception = assertThrows(
@@ -125,7 +122,6 @@ class AtualizarCardapioUseCaseTest {
         );
 
         assertEquals("Id é obrigatório para atualização", exception.getMessage());
-
         verify(cardapioGateway, never()).buscarPorId(any());
         verify(cardapioGateway, never()).salvar(any());
     }

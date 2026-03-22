@@ -1,7 +1,9 @@
 package com.postech.techchallenge.fase2.cardapio.core.domain;
 
 import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 class CardapioTest {
@@ -9,19 +11,19 @@ class CardapioTest {
     @Test
     void deveCriarCardapioValido() {
         Cardapio cardapio = Cardapio.criar(
-                "Pizza",
-                "Pizza de Calabresa",
-                BigDecimal.valueOf(50.0),
-                false,
-                "/path/to/photo.jpg"
+                "Hamburguer",
+                "Delicioso hamburguer artesanal",
+                new BigDecimal("25.00"),
+                true,
+                "/fotos/hamburguer.jpg"
         );
 
         assertNull(cardapio.getId());
-        assertEquals("Pizza", cardapio.getNome());
-        assertEquals("Pizza de Calabresa", cardapio.getDescricao());
-        assertEquals(BigDecimal.valueOf(50.0), cardapio.getPreco());
-        assertFalse(cardapio.getDisponivelApenasRestaurante());
-        assertEquals("/path/to/photo.jpg", cardapio.getCaminhoFoto());
+        assertEquals("Hamburguer", cardapio.getNome());
+        assertEquals("Delicioso hamburguer artesanal", cardapio.getDescricao());
+        assertEquals(new BigDecimal("25.00"), cardapio.getPreco());
+        assertTrue(cardapio.getDisponivelApenasRestaurante());
+        assertEquals("/fotos/hamburguer.jpg", cardapio.getCaminhoFoto());
     }
 
     @Test
@@ -30,9 +32,9 @@ class CardapioTest {
                 1L,
                 "Pizza",
                 "Pizza de Calabresa",
-                BigDecimal.valueOf(50.0),
+                new BigDecimal("40.00"),
                 false,
-                "/path/to/photo.jpg"
+                "/fotos/pizza.jpg"
         );
 
         assertEquals(1L, cardapio.getId());
@@ -46,9 +48,9 @@ class CardapioTest {
                         null,
                         "Pizza",
                         "Pizza de Calabresa",
-                        BigDecimal.valueOf(50.0),
+                        new BigDecimal("40.00"),
                         false,
-                        "/path/to/photo.jpg"
+                        "/fotos/pizza.jpg"
                 )
         );
     }
@@ -57,11 +59,11 @@ class CardapioTest {
     void naoDeveAceitarPrecoNegativo() {
         assertThrows(IllegalArgumentException.class, () ->
                 Cardapio.criar(
-                        "Pizza",
-                        "Pizza de Calabresa",
-                        BigDecimal.valueOf(-10.0),
-                        false,
-                        "/path/to/photo.jpg"
+                        "Hamburguer",
+                        "Descricao",
+                        new BigDecimal("-10.00"),
+                        true,
+                        "/foto.jpg"
                 )
         );
     }
@@ -71,10 +73,10 @@ class CardapioTest {
         assertThrows(IllegalArgumentException.class, () ->
                 Cardapio.criar(
                         "",
-                        "Pizza de Calabresa",
-                        BigDecimal.valueOf(50.0),
-                        false,
-                        "/path/to/photo.jpg"
+                        "Descricao",
+                        new BigDecimal("10.00"),
+                        true,
+                        "/foto.jpg"
                 )
         );
     }
@@ -83,11 +85,11 @@ class CardapioTest {
     void naoDeveAceitarDescricaoVazia() {
         assertThrows(IllegalArgumentException.class, () ->
                 Cardapio.criar(
-                        "Pizza",
+                        "Nome",
                         "",
-                        BigDecimal.valueOf(50.0),
-                        false,
-                        "/path/to/photo.jpg"
+                        new BigDecimal("10.00"),
+                        true,
+                        "/foto.jpg"
                 )
         );
     }
@@ -96,11 +98,37 @@ class CardapioTest {
     void naoDeveAceitarCaminhoFotoVazio() {
         assertThrows(IllegalArgumentException.class, () ->
                 Cardapio.criar(
-                        "Pizza",
-                        "Pizza de Calabresa",
-                        BigDecimal.valueOf(50.0),
-                        false,
+                        "Nome",
+                        "Descricao",
+                        new BigDecimal("10.00"),
+                        true,
                         ""
+                )
+        );
+    }
+
+    @Test
+    void naoDeveAceitarNomeNulo() {
+        assertThrows(IllegalArgumentException.class, () ->
+                Cardapio.criar(
+                        null,
+                        "Descricao",
+                        new BigDecimal("10.00"),
+                        true,
+                        "/foto.jpg"
+                )
+        );
+    }
+
+    @Test
+    void naoDeveAceitarPrecoNulo() {
+        assertThrows(IllegalArgumentException.class, () ->
+                Cardapio.criar(
+                        "Nome",
+                        "Descricao",
+                        null,
+                        true,
+                        "/foto.jpg"
                 )
         );
     }

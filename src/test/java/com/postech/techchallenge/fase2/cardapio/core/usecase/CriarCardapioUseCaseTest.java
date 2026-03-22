@@ -6,8 +6,11 @@ import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
 import java.math.BigDecimal;
+
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 class CriarCardapioUseCaseTest {
@@ -25,20 +28,20 @@ class CriarCardapioUseCaseTest {
     void deveCriarCardapioComSucesso() {
         CardapioInput input = new CardapioInput(
                 null,
-                "Pizza",
-                "Pizza de Calabresa",
-                BigDecimal.valueOf(50.0),
+                "X-Salada",
+                "Hamburguer com salada",
+                new BigDecimal("20.00"),
                 false,
-                "/path/to/photo.jpg"
+                "/fotos/xsalada.jpg"
         );
 
         Cardapio cardapioSalvo = Cardapio.reconstruir(
                 1L,
-                "Pizza",
-                "Pizza de Calabresa",
-                BigDecimal.valueOf(50.0),
+                "X-Salada",
+                "Hamburguer com salada",
+                new BigDecimal("20.00"),
                 false,
-                "/path/to/photo.jpg"
+                "/fotos/xsalada.jpg"
         );
 
         when(cardapioGateway.salvar(any(Cardapio.class))).thenReturn(cardapioSalvo);
@@ -47,7 +50,8 @@ class CriarCardapioUseCaseTest {
 
         assertNotNull(output);
         assertEquals(1L, output.id());
-        assertEquals("Pizza", output.nome());
+        assertEquals("X-Salada", output.nome());
+        assertEquals(new BigDecimal("20.00"), output.preco());
         verify(cardapioGateway, times(1)).salvar(any(Cardapio.class));
     }
 
@@ -57,6 +61,7 @@ class CriarCardapioUseCaseTest {
                 IllegalArgumentException.class,
                 () -> useCase.executar(null)
         );
+
         assertEquals("Input não pode ser nulo", exception.getMessage());
         verify(cardapioGateway, never()).salvar(any());
     }
@@ -64,18 +69,19 @@ class CriarCardapioUseCaseTest {
     @Test
     void deveLancarExcecaoQuandoIdForInformadoNaCriacao() {
         CardapioInput input = new CardapioInput(
-                10L,
-                "Pizza",
-                "Pizza de Calabresa",
-                BigDecimal.valueOf(50.0),
+                1L,
+                "X-Salada",
+                "Hamburguer com salada",
+                new BigDecimal("20.00"),
                 false,
-                "/path/to/photo.jpg"
+                "/fotos/xsalada.jpg"
         );
 
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> useCase.executar(input)
         );
+
         assertEquals("Id não deve ser informado para criação", exception.getMessage());
         verify(cardapioGateway, never()).salvar(any());
     }

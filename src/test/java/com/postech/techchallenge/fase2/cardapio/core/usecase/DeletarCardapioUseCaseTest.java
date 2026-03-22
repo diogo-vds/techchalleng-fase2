@@ -27,18 +27,17 @@ class DeletarCardapioUseCaseTest {
         Long id = 1L;
         Cardapio cardapio = Cardapio.reconstruir(
                 1L,
-                "Pizza",
-                "Pizza de Calabresa",
-                BigDecimal.valueOf(50.0),
+                "X-Salada",
+                "Hamburguer",
+                new BigDecimal("20.00"),
                 false,
-                "/path/to/photo.jpg"
+                "/foto.jpg"
         );
 
         when(cardapioGateway.buscarPorId(id)).thenReturn(Optional.of(cardapio));
         doNothing().when(cardapioGateway).deletar(id);
 
         assertDoesNotThrow(() -> useCase.executar(id));
-
         verify(cardapioGateway, times(1)).buscarPorId(id);
         verify(cardapioGateway, times(1)).deletar(id);
     }
@@ -58,6 +57,7 @@ class DeletarCardapioUseCaseTest {
     @Test
     void deveLancarExcecaoQuandoCardapioNaoExistir() {
         Long id = 1L;
+
         when(cardapioGateway.buscarPorId(id)).thenReturn(Optional.empty());
 
         IllegalArgumentException exception = assertThrows(

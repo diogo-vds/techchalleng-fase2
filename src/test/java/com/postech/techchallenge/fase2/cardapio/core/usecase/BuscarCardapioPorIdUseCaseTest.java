@@ -28,21 +28,20 @@ class BuscarCardapioPorIdUseCaseTest {
         Long id = 1L;
         Cardapio cardapio = Cardapio.reconstruir(
                 1L,
-                "Pizza",
-                "Pizza de Calabresa",
-                BigDecimal.valueOf(50.0),
+                "X-Salada",
+                "Hamburguer",
+                new BigDecimal("20.00"),
                 false,
-                "/path/to/photo.jpg"
+                "/foto.jpg"
         );
 
         when(cardapioGateway.buscarPorId(id)).thenReturn(Optional.of(cardapio));
 
-        CardapioOutput resultado = useCase.executar(id);
+        CardapioOutput output = useCase.executar(id);
 
-        assertNotNull(resultado);
-        assertEquals(1L, resultado.id());
-        assertEquals("Pizza", resultado.nome());
-
+        assertNotNull(output);
+        assertEquals(1L, output.id());
+        assertEquals("X-Salada", output.nome());
         verify(cardapioGateway, times(1)).buscarPorId(id);
     }
 
@@ -60,6 +59,7 @@ class BuscarCardapioPorIdUseCaseTest {
     @Test
     void deveLancarExcecaoQuandoCardapioNaoExistir() {
         Long id = 1L;
+
         when(cardapioGateway.buscarPorId(id)).thenReturn(Optional.empty());
 
         IllegalArgumentException exception = assertThrows(

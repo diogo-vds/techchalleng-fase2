@@ -25,46 +25,31 @@ class ListarCardapioUseCaseTest {
 
     @Test
     void deveListarCardapioComSucesso() {
-        Cardapio cardapio1 = Cardapio.reconstruir(
-                1L,
-                "Pizza",
-                "Pizza de Calabresa",
-                BigDecimal.valueOf(50.0),
-                false,
-                "/path/to/photo1.jpg"
-        );
-        Cardapio cardapio2 = Cardapio.reconstruir(
-                2L,
-                "Hamburguer",
-                "Hamburguer com bacon",
-                BigDecimal.valueOf(35.0),
-                false,
-                "/path/to/photo2.jpg"
-        );
+        Cardapio c1 = Cardapio.reconstruir(1L, "X-Salada", "Hamburguer", new BigDecimal("20.00"), false, "/f1.jpg");
+        Cardapio c2 = Cardapio.reconstruir(2L, "Coca-Cola", "Refrigerante", new BigDecimal("5.00"), false, "/f2.jpg");
 
-        when(cardapioGateway.listarTodos()).thenReturn(List.of(cardapio1, cardapio2));
+        when(cardapioGateway.listarTodos()).thenReturn(List.of(c1, c2));
 
-        List<CardapioOutput> resultado = useCase.executar();
+        List<CardapioOutput> result = useCase.executar();
 
-        assertNotNull(resultado);
-        assertEquals(2, resultado.size());
-
-        CardapioOutput primeiro = resultado.get(0);
-        assertEquals(1L, primeiro.id());
-        assertEquals("Pizza", primeiro.nome());
+        assertNotNull(result);
+        assertEquals(2, result.size());
+        assertEquals(1L, result.get(0).id());
+        assertEquals("X-Salada", result.get(0).nome());
+        assertEquals(2L, result.get(1).id());
+        assertEquals("Coca-Cola", result.get(1).nome());
 
         verify(cardapioGateway, times(1)).listarTodos();
     }
 
     @Test
-    void deveRetornarListaVaziaQuandoNaoExistiremItensNoCardapio() {
+    void deveRetornarListaVaziaQuandoNaoExistirCardapio() {
         when(cardapioGateway.listarTodos()).thenReturn(List.of());
 
-        List<CardapioOutput> resultado = useCase.executar();
+        List<CardapioOutput> result = useCase.executar();
 
-        assertNotNull(resultado);
-        assertTrue(resultado.isEmpty());
-
+        assertNotNull(result);
+        assertTrue(result.isEmpty());
         verify(cardapioGateway, times(1)).listarTodos();
     }
 }
