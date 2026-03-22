@@ -14,7 +14,7 @@ public class RecuperarRestauranteUseCase {
         this.gateway = gateway;
     }
 
-    public Restaurante porId(UUID id) {
+    public Restaurante porId(Long id) {
         if (id == null) {
             throw new IllegalArgumentException("ID do restaurante é obrigatório");
         }

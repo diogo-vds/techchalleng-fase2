@@ -13,7 +13,7 @@ public class AtualizarRestauranteUseCase {
         this.gateway = gateway;
     }
 
-    public Restaurante executar(UUID id,
+    public Restaurante executar(Long id,
                                 String nome,
                                 String endereco,
                                 String tipoCozinha,
