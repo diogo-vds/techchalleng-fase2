@@ -1,5 +1,11 @@
 package com.postech.techchallenge.fase2.restaurante.infra.gateway;
 
+import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
+import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
+import com.postech.techchallenge.fase2.cardapio.infra.gateway.CardapioGatewayImpl;
+import com.postech.techchallenge.fase2.cardapio.infra.persistence.entity.CardapioEntity;
+import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
+import com.postech.techchallenge.fase2.endereco.infra.persistence.entity.EnderecoEntity;
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
 import com.postech.techchallenge.fase2.restaurante.infra.persistence.entity.RestauranteEntity;
@@ -20,8 +26,9 @@ public class RestauranteGatewayImpl implements RestauranteGateway {
     public Restaurante salvar(Restaurante restaurante) {
         RestauranteEntity entity = new RestauranteEntity();
         entity.setNome(restaurante.getNome());
-        entity.setEndereco(restaurante.getEndereco());
+        entity.setEndereco(toEntity(restaurante.getEndereco()));
         entity.setTipoCozinha(restaurante.getTipoCozinha());
+        entity.setCardapio(toEntity(restaurante.getCardapio()));
         entity.setHorarioFuncionamento(restaurante.getHorarioFuncionamento());
         entity.setDonoId(restaurante.getDonoId());
         restauranteRepository.save(entity);
@@ -48,14 +55,76 @@ public class RestauranteGatewayImpl implements RestauranteGateway {
     }
 
     public Restaurante toDomain(RestauranteEntity entity){
+
         return new Restaurante(
                 entity.getId(),
                 entity.getNome(),
-                entity.getEndereco(),
+                toDomain(entity.getEndereco()),
                 entity.getTipoCozinha(),
-                entity.getCardapio(),
+                toDomain(entity.getCardapio()),
                 entity.getHorarioFuncionamento(),
                 entity.getDonoId()
         );
     }
+
+    public CardapioEntity toEntity(Cardapio cardapio) {
+        CardapioEntity entity = new CardapioEntity();
+        if (cardapio.getId() != null) {
+            entity.setId(cardapio.getId());
+        }
+        entity.setNome(cardapio.getNome());
+        entity.setDescricao(cardapio.getDescricao());
+        entity.setPreco(cardapio.getPreco());
+        entity.setDisponivelApenasRestaurante(cardapio.getDisponivelApenasRestaurante());
+        entity.setCaminhoFoto(cardapio.getCaminhoFoto());
+        return entity;
+    }
+
+    public Cardapio toDomain(CardapioEntity entity) {
+        return Cardapio.reconstruir(
+                entity.getId(),
+                entity.getNome(),
+                entity.getDescricao(),
+                entity.getPreco(),
+                entity.getDisponivelApenasRestaurante(),
+                entity.getCaminhoFoto()
+        );
+    }
+
+    private EnderecoEntity toEntity(Endereco endereco) {
+        EnderecoEntity entity = new EnderecoEntity();
+
+        if (endereco.getId() != null) {
+            entity.setId(endereco.getId());
+        }
+        entity.setRua(endereco.getRua());
+        entity.setNumero(endereco.getNumero());
+        entity.setComplemento(endereco.getComplemento());
+        entity.setBairro(endereco.getBairro());
+        entity.setCidade(endereco.getCidade());
+        entity.setUf(endereco.getUf());
+        entity.setCep(endereco.getCep());
+
+        return entity;
+    }
+
+    private Endereco toDomain(EnderecoEntity entity) {
+        if (entity.getId() == null) {
+
+            throw new IllegalArgumentException("EnderecoEntity sem ID não pode ser reconstruído");
+        }
+
+        return Endereco.reconstruir(
+                entity.getId(),
+                entity.getRua(),
+                entity.getNumero(),
+                entity.getComplemento(),
+                entity.getBairro(),
+                entity.getCidade(),
+                entity.getUf(),
+                entity.getCep()
+        );
+    }
+
+
 }

@@ -47,24 +47,56 @@ public class Restaurante {
         return id;
     }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
     public String getNome() {
         return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
     public Endereco getEndereco() {
         return endereco;
     }
 
+    public void setEndereco(Endereco endereco) {
+        this.endereco = endereco;
+    }
+
     public String getTipoCozinha() {
         return tipoCozinha;
+    }
+
+    public void setTipoCozinha(String tipoCozinha) {
+        this.tipoCozinha = tipoCozinha;
+    }
+
+    public Cardapio getCardapio() {
+        return cardapio;
+    }
+
+    public void setCardapio(Cardapio cardapio) {
+        this.cardapio = cardapio;
     }
 
     public String getHorarioFuncionamento() {
         return horarioFuncionamento;
     }
 
+    public void setHorarioFuncionamento(String horarioFuncionamento) {
+        this.horarioFuncionamento = horarioFuncionamento;
+    }
+
     public Long getDonoId() {
         return donoId;
+    }
+
+    public void setDonoId(Long donoId) {
+        this.donoId = donoId;
     }
 
     public void alterarDados(String nome,

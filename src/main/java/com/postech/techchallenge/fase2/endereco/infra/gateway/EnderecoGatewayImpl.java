@@ -45,13 +45,10 @@ public class EnderecoGatewayImpl implements EnderecoGateway {
         enderecoRepository.deleteById(id);
     }
 
-    // =========================
-    // MAPPERS
-    // =========================
 
     private EnderecoEntity toEntity(Endereco endereco) {
         EnderecoEntity entity = new EnderecoEntity();
-        // Não precisa setar ID se for novo, JPA gera automaticamente
+
         if (endereco.getId() != null) {
             entity.setId(endereco.getId());
         }
@@ -68,7 +65,7 @@ public class EnderecoGatewayImpl implements EnderecoGateway {
 
     private Endereco toDomain(EnderecoEntity entity) {
         if (entity.getId() == null) {
-            // Para consistência, sempre usamos reconstruir com ID
+
             throw new IllegalArgumentException("EnderecoEntity sem ID não pode ser reconstruído");
         }
 
