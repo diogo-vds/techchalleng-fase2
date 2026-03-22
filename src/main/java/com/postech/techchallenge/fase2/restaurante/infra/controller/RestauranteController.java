@@ -1,7 +1,6 @@
 package com.postech.techchallenge.fase2.restaurante.infra.controller;
 
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
-import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
 import com.postech.techchallenge.fase2.restaurante.core.usecase.*;
 import com.postech.techchallenge.fase2.restaurante.infra.controller.dto.RestauranteRequestDTO;
 import com.postech.techchallenge.fase2.restaurante.infra.controller.dto.RestauranteResponseDTO;
@@ -10,7 +9,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
