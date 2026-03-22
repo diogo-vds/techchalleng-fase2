@@ -1,8 +1,10 @@
 package com.postech.techchallenge.fase2.restaurante.infra.controller;
 
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
-import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
-import com.postech.techchallenge.fase2.restaurante.core.usecase.*;
+import com.postech.techchallenge.fase2.restaurante.core.usecase.AtualizarRestauranteUseCase;
+import com.postech.techchallenge.fase2.restaurante.core.usecase.CriarRestauranteUseCase;
+import com.postech.techchallenge.fase2.restaurante.core.usecase.DeletarRestauranteUseCase;
+import com.postech.techchallenge.fase2.restaurante.core.usecase.RecuperarRestauranteUseCase;
 import com.postech.techchallenge.fase2.restaurante.infra.controller.dto.RestauranteRequestDTO;
 import com.postech.techchallenge.fase2.restaurante.infra.controller.dto.RestauranteResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -10,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @RestController
@@ -21,7 +22,6 @@ public class RestauranteController {
     private final RecuperarRestauranteUseCase recuperarRestauranteUseCase;
     private final AtualizarRestauranteUseCase atualizarRestauranteUseCase;
     private final DeletarRestauranteUseCase deletarRestauranteUseCase;
-
 
     public RestauranteController(
             CriarRestauranteUseCase criarRestauranteUseCase,
@@ -37,10 +37,12 @@ public class RestauranteController {
     @PostMapping
     public ResponseEntity<RestauranteResponseDTO> criar(@RequestBody RestauranteRequestDTO request) {
         try {
+
             Restaurante restaurante = criarRestauranteUseCase.executar(
                     request.getNome(),
                     request.getEndereco(),
                     request.getTipoCozinha(),
+                    request.getCardapio(),
                     request.getHorarioFuncionamento(),
                     request.getDonoId()
             );
@@ -93,11 +95,14 @@ public class RestauranteController {
             @PathVariable Long id,
             @RequestBody RestauranteRequestDTO request) {
         try {
+
+
             Restaurante restaurante = atualizarRestauranteUseCase.executar(
                     id,
                     request.getNome(),
                     request.getEndereco(),
                     request.getTipoCozinha(),
+                    request.getCardapio(),
                     request.getHorarioFuncionamento()
             );
 

@@ -1,5 +1,7 @@
 package com.postech.techchallenge.fase2.restaurante.core.usecase;
 
+import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
+import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
 
@@ -14,8 +16,9 @@ public class CriarRestauranteUseCase {
     }
 
     public Restaurante executar(String nome,
-                                String endereco,
+                                Endereco endereco,
                                 String tipoCozinha,
+                                Cardapio cardapio,
                                 String horarioFuncionamento,
                                 UUID donoId) {
 
@@ -25,6 +28,7 @@ public class CriarRestauranteUseCase {
                 nome,
                 endereco,
                 tipoCozinha,
+                cardapio,
                 horarioFuncionamento,
                 donoId
         );
@@ -33,14 +37,14 @@ public class CriarRestauranteUseCase {
     }
 
     private void validarDadosObrigatorios(String nome,
-                                          String endereco,
+                                          Endereco endereco,
                                           String tipoCozinha,
                                           String horarioFuncionamento,
                                           UUID donoId) {
         if (nome == null || nome.trim().isEmpty()) {
             throw new IllegalArgumentException("Nome do restaurante é obrigatório");
         }
-        if (endereco == null || endereco.trim().isEmpty()) {
+        if (endereco == null) {
             throw new IllegalArgumentException("Endereço do restaurante é obrigatório");
         }
         if (tipoCozinha == null || tipoCozinha.trim().isEmpty()) {

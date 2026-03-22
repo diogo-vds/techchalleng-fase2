@@ -54,6 +54,7 @@ public class RestauranteGatewayImpl implements RestauranteGateway {
                 entity.getNome(),
                 entity.getEndereco(),
                 entity.getTipoCozinha(),
+                entity.getCardapio(),
                 entity.getHorarioFuncionamento(),
                 entity.getDonoId()
         );
