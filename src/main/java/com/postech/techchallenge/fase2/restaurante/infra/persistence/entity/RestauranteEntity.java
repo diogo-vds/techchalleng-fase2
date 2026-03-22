@@ -1,43 +1,27 @@
-package com.postech.techchallenge.fase2.restaurante.infra.controller.dto;
+package com.postech.techchallenge.fase2.restaurante.infra.persistence.entity;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
+import jakarta.persistence.*;
 
 import java.util.UUID;
 
-public class RestauranteResponseDTO {
+@Entity
+@Table(name = "restaurante")
+public class RestauranteEntity {
 
-    @JsonProperty("id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @JsonProperty("nome")
+    @Column(nullable = false)
     private String nome;
-
-    @JsonProperty("endereco")
+    @Column(nullable = false)
     private String endereco;
-
-    @JsonProperty("tipo_cozinha")
+    @Column(nullable = false)
     private String tipoCozinha;
-
-    @JsonProperty("horario_funcionamento")
+    @Column(nullable = false)
     private String horarioFuncionamento;
-
-    @JsonProperty("dono_id")
+    @Column(nullable = false)
     private UUID donoId;
 
-
-    public RestauranteResponseDTO() {}
-
-    public RestauranteResponseDTO(Restaurante restaurante) {
-        this.id = restaurante.getId();
-        this.nome = restaurante.getNome();
-        this.endereco = restaurante.getEndereco();
-        this.tipoCozinha = restaurante.getTipoCozinha();
-        this.horarioFuncionamento = restaurante.getHorarioFuncionamento();
-        this.donoId = restaurante.getDonoId();
-    }
-
-    // Getters e Setters
     public Long getId() {
         return id;
     }
@@ -85,4 +69,5 @@ public class RestauranteResponseDTO {
     public void setDonoId(UUID donoId) {
         this.donoId = donoId;
     }
+
 }

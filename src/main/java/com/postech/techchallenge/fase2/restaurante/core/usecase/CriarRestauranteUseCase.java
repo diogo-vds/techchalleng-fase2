@@ -22,7 +22,6 @@ public class CriarRestauranteUseCase {
         validarDadosObrigatorios(nome, endereco, tipoCozinha, horarioFuncionamento, donoId);
 
         Restaurante restaurante = new Restaurante(
-                UUID.randomUUID(),
                 nome,
                 endereco,
                 tipoCozinha,

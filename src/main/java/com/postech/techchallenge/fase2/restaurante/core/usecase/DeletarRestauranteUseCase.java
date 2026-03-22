@@ -12,7 +12,7 @@ public class DeletarRestauranteUseCase {
         this.gateway = gateway;
     }
 
-    public void executar(UUID id) {
+    public void executar(Long id) {
 
         gateway.buscarPorId(id)
                 .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
