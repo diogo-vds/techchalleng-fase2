@@ -82,6 +82,20 @@ class UsuarioGatewayImplTest {
     }
 
     @Test
+    void deveLancarExcecaoQuandoTipoUsuarioNaoExisteAoSalvar() {
+        Usuario usuario = criarUsuario();
+
+        when(tipoUsuarioRepository.findById(1L))
+                .thenReturn(Optional.empty());
+
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> gateway.salvar(usuario));
+
+        assertEquals("TipoUsuario n\u00e3o encontrado", exception.getMessage());
+        verify(usuarioRepository, never()).save(any());
+    }
+
+    @Test
     void deveListarUsuarios() {
 
         UsuarioEntity entity = criarUsuarioEntity();
