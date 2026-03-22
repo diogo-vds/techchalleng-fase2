@@ -56,7 +56,7 @@ public class RestauranteController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RestauranteResponseDTO> buscarPorId(@PathVariable UUID id) {
+    public ResponseEntity<RestauranteResponseDTO> buscarPorId(@PathVariable Long id) {
         try {
             Restaurante restaurante = recuperarRestauranteUseCase.porId(id);
             RestauranteResponseDTO response = new RestauranteResponseDTO(restaurante);
@@ -90,7 +90,7 @@ public class RestauranteController {
 
     @PutMapping("/{id}")
     public ResponseEntity<RestauranteResponseDTO> atualizar(
-            @PathVariable UUID id,
+            @PathVariable Long id,
             @RequestBody RestauranteRequestDTO request) {
         try {
             Restaurante restaurante = atualizarRestauranteUseCase.executar(
@@ -115,7 +115,7 @@ public class RestauranteController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletar(@PathVariable UUID id) {
+    public ResponseEntity<Void> deletar(@PathVariable Long id) {
         try {
             deletarRestauranteUseCase.executar(id);
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);

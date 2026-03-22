@@ -4,14 +4,14 @@ import java.util.UUID;
 
 public class Restaurante {
 
-    private UUID id;
+    private Long id;
     private String nome;
     private String endereco;
     private String tipoCozinha;
     private String horarioFuncionamento;
     private UUID donoId;
 
-    public Restaurante(UUID id,
+    public Restaurante(Long id,
                        String nome,
                        String endereco,
                        String tipoCozinha,
@@ -25,7 +25,19 @@ public class Restaurante {
         this.donoId = donoId;
     }
 
-    public UUID getId() {
+    public Restaurante(String nome,
+                       String endereco,
+                       String tipoCozinha,
+                       String horarioFuncionamento,
+                       UUID donoId) {
+        this.nome = nome;
+        this.endereco = endereco;
+        this.tipoCozinha = tipoCozinha;
+        this.horarioFuncionamento = horarioFuncionamento;
+        this.donoId = donoId;
+    }
+
+    public Long getId() {
         return id;
     }
 
