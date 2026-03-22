@@ -1,6 +1,5 @@
 package com.postech.techchallenge.fase2.restaurante.core.domain;
 
-import java.util.UUID;
 
 public class Restaurante {
 
@@ -9,14 +8,14 @@ public class Restaurante {
     private String endereco;
     private String tipoCozinha;
     private String horarioFuncionamento;
-    private UUID donoId;
+    private Long donoId;
 
     public Restaurante(Long id,
                        String nome,
                        String endereco,
                        String tipoCozinha,
                        String horarioFuncionamento,
-                       UUID donoId) {
+                       Long donoId) {
         this.id = id;
         this.nome = nome;
         this.endereco = endereco;
@@ -29,7 +28,7 @@ public class Restaurante {
                        String endereco,
                        String tipoCozinha,
                        String horarioFuncionamento,
-                       UUID donoId) {
+                       Long donoId) {
         this.nome = nome;
         this.endereco = endereco;
         this.tipoCozinha = tipoCozinha;
@@ -57,7 +56,7 @@ public class Restaurante {
         return horarioFuncionamento;
     }
 
-    public UUID getDonoId() {
+    public Long getDonoId() {
         return donoId;
     }
 

@@ -1,7 +1,8 @@
 package com.postech.techchallenge.fase2.restaurante.infra.controller.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import java.util.UUID;
+
+import java.lang.Long;
 
 public class RestauranteRequestDTO {
 
@@ -18,14 +19,14 @@ public class RestauranteRequestDTO {
     private String horarioFuncionamento;
 
     @JsonProperty("dono_id")
-    private UUID donoId;
+    private Long donoId;
 
 
     public RestauranteRequestDTO() {}
 
 
     public RestauranteRequestDTO(String nome, String endereco, String tipoCozinha,
-                                 String horarioFuncionamento, UUID donoId) {
+                                 String horarioFuncionamento, Long donoId) {
         this.nome = nome;
         this.endereco = endereco;
         this.tipoCozinha = tipoCozinha;
@@ -66,11 +67,11 @@ public class RestauranteRequestDTO {
         this.horarioFuncionamento = horarioFuncionamento;
     }
 
-    public UUID getDonoId() {
+    public Long getDonoId() {
         return donoId;
     }
 
-    public void setDonoId(UUID donoId) {
+    public void setDonoId(Long donoId) {
         this.donoId = donoId;
     }
 }

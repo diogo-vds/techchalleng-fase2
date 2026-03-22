@@ -4,7 +4,6 @@ import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
 
 import java.util.List;
-import java.util.UUID;
 
 public class RecuperarRestauranteUseCase {
 

@@ -3,8 +3,6 @@ package com.postech.techchallenge.fase2.restaurante.core.usecase;
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
 
-import java.util.UUID;
-
 public class AtualizarRestauranteUseCase {
 
     private final RestauranteGateway gateway;
