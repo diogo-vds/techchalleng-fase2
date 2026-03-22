@@ -196,6 +196,18 @@ class EnderecoTest {
     }
 
     @Test
+    void equalsDeveRetornarFalseQuandoIdForNulo() {
+
+        Endereco e1 = Endereco.criar(
+                "Rua","1",null,"Centro","Curitiba","PR","80000000");
+
+        Endereco e2 = Endereco.reconstruir(
+                1L,"Rua","1",null,"Centro","Curitiba","PR","80000000");
+
+        assertNotEquals(e1, e2);
+    }
+
+    @Test
     void naoDeveAceitarCampoNulo() {
 
         assertThrows(IllegalArgumentException.class, () ->
