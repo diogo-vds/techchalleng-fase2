@@ -26,16 +26,19 @@ public class RestauranteResponseDTO {
 
     public RestauranteResponseDTO() {}
 
-    public RestauranteResponseDTO(Restaurante restaurante) {
-        this.id = restaurante.getId();
-        this.nome = restaurante.getNome();
-        this.endereco = restaurante.getEndereco();
-        this.tipoCozinha = restaurante.getTipoCozinha();
-        this.horarioFuncionamento = restaurante.getHorarioFuncionamento();
-        this.donoId = restaurante.getDonoId();
+    public RestauranteResponseDTO(Long id, String nome, String endereco, String tipoCozinha, String horarioFuncionamento, Long donoId) {
+        this.id = id;
+        this.nome = nome;
+        this.endereco = endereco;
+        this.tipoCozinha = tipoCozinha;
+        this.horarioFuncionamento = horarioFuncionamento;
+        this.donoId = donoId;
     }
 
-    // Getters e Setters
+    public RestauranteResponseDTO(Restaurante restaurante) {
+    }
+
+
     public Long getId() {
         return id;
     }

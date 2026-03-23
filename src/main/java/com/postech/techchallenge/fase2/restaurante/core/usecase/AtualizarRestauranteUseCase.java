@@ -1,5 +1,7 @@
 package com.postech.techchallenge.fase2.restaurante.core.usecase;
 
+import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
+import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
 
@@ -13,19 +15,15 @@ public class AtualizarRestauranteUseCase {
 
     public Restaurante executar(Long id,
                                 String nome,
-                                String endereco,
+                                Endereco endereco,
                                 String tipoCozinha,
+                                Cardapio cardapio,
                                 String horarioFuncionamento) {
 
         Restaurante restaurante = gateway.buscarPorId(id)
-                .orElseThrow(() -> new RuntimeException("Restaurante não  encontrado"));
+                .orElseThrow(() -> new RuntimeException("Restaurante não encontrado"));
 
-        restaurante.alterarDados(
-                nome,
-                endereco,
-                tipoCozinha,
-                horarioFuncionamento
-        );
+        restaurante.alterarDados(nome, endereco, tipoCozinha, cardapio, horarioFuncionamento);
 
         return gateway.salvar(restaurante);
     }

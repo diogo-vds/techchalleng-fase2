@@ -40,7 +40,7 @@ public class CardapioGatewayImpl implements CardapioGateway {
         cardapioRepository.deleteById(id);
     }
 
-    private CardapioEntity toEntity(Cardapio cardapio) {
+    public CardapioEntity toEntity(Cardapio cardapio) {
         CardapioEntity entity = new CardapioEntity();
         if (cardapio.getId() != null) {
             entity.setId(cardapio.getId());
@@ -53,7 +53,7 @@ public class CardapioGatewayImpl implements CardapioGateway {
         return entity;
     }
 
-    private Cardapio toDomain(CardapioEntity entity) {
+    public Cardapio toDomain(CardapioEntity entity) {
         return Cardapio.reconstruir(
                 entity.getId(),
                 entity.getNome(),

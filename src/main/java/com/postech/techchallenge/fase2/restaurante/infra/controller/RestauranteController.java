@@ -1,7 +1,10 @@
 package com.postech.techchallenge.fase2.restaurante.infra.controller;
 
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
-import com.postech.techchallenge.fase2.restaurante.core.usecase.*;
+import com.postech.techchallenge.fase2.restaurante.core.usecase.AtualizarRestauranteUseCase;
+import com.postech.techchallenge.fase2.restaurante.core.usecase.CriarRestauranteUseCase;
+import com.postech.techchallenge.fase2.restaurante.core.usecase.DeletarRestauranteUseCase;
+import com.postech.techchallenge.fase2.restaurante.core.usecase.RecuperarRestauranteUseCase;
 import com.postech.techchallenge.fase2.restaurante.infra.controller.dto.RestauranteRequestDTO;
 import com.postech.techchallenge.fase2.restaurante.infra.controller.dto.RestauranteResponseDTO;
 import org.springframework.http.HttpStatus;
@@ -20,7 +23,6 @@ public class RestauranteController {
     private final AtualizarRestauranteUseCase atualizarRestauranteUseCase;
     private final DeletarRestauranteUseCase deletarRestauranteUseCase;
 
-
     public RestauranteController(
             CriarRestauranteUseCase criarRestauranteUseCase,
             RecuperarRestauranteUseCase recuperarRestauranteUseCase,
@@ -35,10 +37,12 @@ public class RestauranteController {
     @PostMapping
     public ResponseEntity<RestauranteResponseDTO> criar(@RequestBody RestauranteRequestDTO request) {
         try {
+
             Restaurante restaurante = criarRestauranteUseCase.executar(
                     request.getNome(),
                     request.getEndereco(),
                     request.getTipoCozinha(),
+                    request.getCardapio(),
                     request.getHorarioFuncionamento(),
                     request.getDonoId()
             );
@@ -96,6 +100,7 @@ public class RestauranteController {
                     request.getNome(),
                     request.getEndereco(),
                     request.getTipoCozinha(),
+                    request.getCardapio(),
                     request.getHorarioFuncionamento()
             );
 

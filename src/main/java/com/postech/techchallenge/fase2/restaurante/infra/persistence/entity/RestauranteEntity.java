@@ -1,5 +1,7 @@
 package com.postech.techchallenge.fase2.restaurante.infra.persistence.entity;
 
+import com.postech.techchallenge.fase2.cardapio.infra.persistence.entity.CardapioEntity;
+import com.postech.techchallenge.fase2.endereco.infra.persistence.entity.EnderecoEntity;
 import jakarta.persistence.*;
 
 @Entity
@@ -11,10 +13,14 @@ public class RestauranteEntity {
     private Long id;
     @Column(nullable = false)
     private String nome;
-    @Column(nullable = false)
-    private String endereco;
+    @OneToOne
+    @JoinColumn(name = "endereco_id", nullable = false)
+    private EnderecoEntity endereco;
     @Column(nullable = false)
     private String tipoCozinha;
+    @ManyToOne
+    @JoinColumn(name = "cardapio_id", nullable = false)
+    private CardapioEntity cardapio;
     @Column(nullable = false)
     private String horarioFuncionamento;
     @Column(nullable = false)
@@ -36,11 +42,11 @@ public class RestauranteEntity {
         this.nome = nome;
     }
 
-    public String getEndereco() {
+    public EnderecoEntity getEndereco() {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    public void setEndereco(EnderecoEntity endereco) {
         this.endereco = endereco;
     }
 
@@ -50,6 +56,14 @@ public class RestauranteEntity {
 
     public void setTipoCozinha(String tipoCozinha) {
         this.tipoCozinha = tipoCozinha;
+    }
+
+    public CardapioEntity getCardapio() {
+        return cardapio;
+    }
+
+    public void setCardapio(CardapioEntity cardapio) {
+        this.cardapio = cardapio;
     }
 
     public String getHorarioFuncionamento() {
@@ -67,5 +81,4 @@ public class RestauranteEntity {
     public void setDonoId(Long donoId) {
         this.donoId = donoId;
     }
-
 }
