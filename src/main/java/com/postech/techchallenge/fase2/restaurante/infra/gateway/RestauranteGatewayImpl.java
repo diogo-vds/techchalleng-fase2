@@ -126,5 +126,16 @@ public class RestauranteGatewayImpl implements RestauranteGateway {
         );
     }
 
+    @Override
+    public boolean existePorNomeEEndereco(String nome, Endereco endereco) {
+        return restauranteRepository.existsByNomeAndEnderecoRuaAndEnderecoNumeroAndEnderecoCidadeAndEnderecoUf(
+                nome,
+                endereco.getRua(),
+                endereco.getNumero(),
+                endereco.getCidade(),
+                endereco.getUf()
+        );
+    }
+
 
 }

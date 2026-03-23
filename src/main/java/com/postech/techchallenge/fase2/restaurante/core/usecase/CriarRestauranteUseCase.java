@@ -22,6 +22,7 @@ public class CriarRestauranteUseCase {
                                 Long donoId) {
 
         validarDadosObrigatorios(nome, endereco, tipoCozinha, horarioFuncionamento, donoId);
+        validarRestauranteUnico(nome, endereco);
 
         Restaurante restaurante = new Restaurante(
                 nome,
@@ -59,4 +60,12 @@ public class CriarRestauranteUseCase {
             throw new IllegalArgumentException("Somente o dono pode criar um restaurante");
         }
     }
+
+    private void validarRestauranteUnico(String nome, Endereco endereco) {
+        if (gateway.existePorNomeEEndereco(nome, endereco)) {
+            throw new IllegalArgumentException("Já existe um restaurante com este nome e endereço cadastrado.");
+        }
+    }
+
+
 }

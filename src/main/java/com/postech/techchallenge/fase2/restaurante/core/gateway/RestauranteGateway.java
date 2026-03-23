@@ -1,5 +1,6 @@
 package com.postech.techchallenge.fase2.restaurante.core.gateway;
 
+import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 
 import java.util.List;
@@ -14,4 +15,6 @@ public interface RestauranteGateway {
     List<Restaurante> listarTodos();
 
     void deletar(Long id);
+
+    boolean existePorNomeEEndereco(String nome, Endereco endereco);
 }

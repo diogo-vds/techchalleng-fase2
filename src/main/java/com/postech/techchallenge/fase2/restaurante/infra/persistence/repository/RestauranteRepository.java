@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface RestauranteRepository extends JpaRepository<RestauranteEntity, Long> {
+
+    boolean existsByNomeAndEnderecoRuaAndEnderecoNumeroAndEnderecoCidadeAndEnderecoUf(
+            String nome, String rua, String numero, String cidade, String uf);
 }
