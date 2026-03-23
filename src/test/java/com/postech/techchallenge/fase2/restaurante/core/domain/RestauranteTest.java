@@ -58,7 +58,7 @@ class RestauranteTest {
 
     @Test
     void deveCobrirTodosSettersEGetters() {
-        Restaurante r = new Restaurante(
+        Restaurante restaurante = new Restaurante(
                 "Nome",
                 criarEndereco(),
                 "Italiana",
@@ -70,21 +70,21 @@ class RestauranteTest {
         Endereco novoEndereco = criarEndereco();
         Cardapio novoCardapio = criarCardapio();
 
-        r.setId(99L);
-        r.setNome("Novo Nome");
-        r.setEndereco(novoEndereco);
-        r.setTipoCozinha("Japonesa");
-        r.setCardapio(novoCardapio);
-        r.setHorarioFuncionamento("10:00");
-        r.setDonoId(500L);
+        restaurante.setId(99L);
+        restaurante.setNome("Novo Nome");
+        restaurante.setEndereco(novoEndereco);
+        restaurante.setTipoCozinha("Japonesa");
+        restaurante.setCardapio(novoCardapio);
+        restaurante.setHorarioFuncionamento("10:00");
+        restaurante.setDonoId(500L);
 
-        assertEquals(99L, r.getId());
-        assertEquals("Novo Nome", r.getNome());
-        assertEquals(novoEndereco, r.getEndereco());
-        assertEquals("Japonesa", r.getTipoCozinha());
-        assertEquals(novoCardapio, r.getCardapio());
-        assertEquals("10:00", r.getHorarioFuncionamento());
-        assertEquals(500L, r.getDonoId());
+        assertEquals(99L, restaurante.getId());
+        assertEquals("Novo Nome", restaurante.getNome());
+        assertEquals(novoEndereco, restaurante.getEndereco());
+        assertEquals("Japonesa", restaurante.getTipoCozinha());
+        assertEquals(novoCardapio, restaurante.getCardapio());
+        assertEquals("10:00", restaurante.getHorarioFuncionamento());
+        assertEquals(500L, restaurante.getDonoId());
     }
 
     @Test
