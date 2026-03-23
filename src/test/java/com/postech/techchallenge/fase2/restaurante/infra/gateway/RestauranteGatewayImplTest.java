@@ -106,6 +106,39 @@ class RestauranteGatewayImplTest {
     }
 
     @Test
+    void deveSalvarRestauranteComEnderecoSemIdMapeandoTodosOsCampos() {
+
+        var endereco = Endereco.criar(
+                "Rua B", "456", "Sala 2",
+                "Bela Vista", "Sao Paulo", "SP", "87654321"
+        );
+
+        var restaurante = new Restaurante(
+                "Nome",
+                endereco,
+                "Italiana",
+                criarCardapio(),
+                "08:00",
+                1L
+        );
+
+        gateway.salvar(restaurante);
+
+        var captor = org.mockito.ArgumentCaptor.forClass(RestauranteEntity.class);
+        verify(repository).save(captor.capture());
+
+        var enderecoEntity = captor.getValue().getEndereco();
+        assertNull(enderecoEntity.getId());
+        assertEquals("Rua B", enderecoEntity.getRua());
+        assertEquals("456", enderecoEntity.getNumero());
+        assertEquals("Sala 2", enderecoEntity.getComplemento());
+        assertEquals("Bela Vista", enderecoEntity.getBairro());
+        assertEquals("Sao Paulo", enderecoEntity.getCidade());
+        assertEquals("SP", enderecoEntity.getUf());
+        assertEquals("87654321", enderecoEntity.getCep());
+    }
+
+    @Test
     void deveBuscarPorId() {
 
         when(repository.findById(1L))

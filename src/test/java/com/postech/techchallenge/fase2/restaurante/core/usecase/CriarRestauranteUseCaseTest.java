@@ -127,6 +127,23 @@ class CriarRestauranteUseCaseTest {
     }
 
     @Test
+    void deveFalharQuandoTipoCozinhaForNulo() {
+        Exception ex = assertThrows(IllegalArgumentException.class, () ->
+                useCase.executar(
+                        "Nome",
+                        criarEndereco(),
+                        null,
+                        criarCardapio(),
+                        "08:00",
+                        1L
+                )
+        );
+
+        assertEquals("Tipo de cozinha \u00e9 obrigat\u00f3rio", ex.getMessage());
+        verify(gateway, never()).salvar(any());
+    }
+
+    @Test
     void deveFalharQuandoHorarioForInvalido() {
         Exception ex = assertThrows(IllegalArgumentException.class, () ->
                 useCase.executar(
@@ -140,6 +157,23 @@ class CriarRestauranteUseCaseTest {
         );
 
         assertEquals("Horário de funcionamento é obrigatório", ex.getMessage());
+    }
+
+    @Test
+    void deveFalharQuandoHorarioForNulo() {
+        Exception ex = assertThrows(IllegalArgumentException.class, () ->
+                useCase.executar(
+                        "Nome",
+                        criarEndereco(),
+                        "Italiana",
+                        criarCardapio(),
+                        null,
+                        1L
+                )
+        );
+
+        assertEquals("Hor\u00e1rio de funcionamento \u00e9 obrigat\u00f3rio", ex.getMessage());
+        verify(gateway, never()).salvar(any());
     }
 
     @Test
