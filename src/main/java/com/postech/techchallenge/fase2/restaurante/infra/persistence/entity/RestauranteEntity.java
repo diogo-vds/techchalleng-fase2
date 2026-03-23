@@ -18,8 +18,8 @@ public class RestauranteEntity {
     private EnderecoEntity endereco;
     @Column(nullable = false)
     private String tipoCozinha;
-    @OneToOne
-    @JoinColumn(name = "endereco_id", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "cardapio_id", nullable = false)
     private CardapioEntity cardapio;
     @Column(nullable = false)
     private String horarioFuncionamento;
