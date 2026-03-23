@@ -55,5 +55,8 @@ public class CriarRestauranteUseCase {
         if (donoId == null) {
             throw new IllegalArgumentException("ID do dono é obrigatório");
         }
+        if (donoId.compareTo(2L) != 0) {
+            throw new IllegalArgumentException("Somente o dono pode criar um restaurante");
+        }
     }
 }

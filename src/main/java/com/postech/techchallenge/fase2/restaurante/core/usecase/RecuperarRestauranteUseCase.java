@@ -2,6 +2,7 @@ package com.postech.techchallenge.fase2.restaurante.core.usecase;
 
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
+import com.postech.techchallenge.fase2.restaurante.infra.controller.dto.RestauranteResponseDTO;
 
 import java.util.List;
 

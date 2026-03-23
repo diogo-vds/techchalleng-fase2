@@ -35,7 +35,7 @@ public class RestauranteController {
     }
 
     @PostMapping
-    public ResponseEntity<RestauranteResponseDTO> criar(@RequestBody RestauranteRequestDTO request) {
+    public ResponseEntity<?> criar(@RequestBody RestauranteRequestDTO request) {
         try {
 
             Restaurante restaurante = criarRestauranteUseCase.executar(
@@ -46,24 +46,19 @@ public class RestauranteController {
                     request.getHorarioFuncionamento(),
                     request.getDonoId()
             );
-
-            RestauranteResponseDTO response = new RestauranteResponseDTO(restaurante);
-            return new ResponseEntity<>(response, HttpStatus.CREATED);
+            return new ResponseEntity<>(restaurante, HttpStatus.CREATED);
 
         } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<RestauranteResponseDTO> buscarPorId(@PathVariable Long id) {
+    public ResponseEntity<Restaurante> buscarPorId(@PathVariable Long id) {
         try {
-            Restaurante restaurante = recuperarRestauranteUseCase.porId(id);
-            RestauranteResponseDTO response = new RestauranteResponseDTO(restaurante);
-            return ResponseEntity.ok(response);
-
+            return ResponseEntity.ok(recuperarRestauranteUseCase.porId(id));
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (RuntimeException e) {
@@ -75,16 +70,9 @@ public class RestauranteController {
     }
 
     @GetMapping
-    public ResponseEntity<List<RestauranteResponseDTO>> listarTodos() {
+    public ResponseEntity<List<Restaurante>> listarTodos() {
         try {
-            List<Restaurante> restaurantes = recuperarRestauranteUseCase.todos();
-
-            List<RestauranteResponseDTO> response = restaurantes.stream()
-                    .map(RestauranteResponseDTO::new)
-                    .collect(Collectors.toList());
-
-            return ResponseEntity.ok(response);
-
+            return ResponseEntity.ok(recuperarRestauranteUseCase.todos());
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }

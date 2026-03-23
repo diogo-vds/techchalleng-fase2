@@ -51,14 +51,14 @@ class CriarRestauranteUseCaseTest {
                 "Italiana",
                 criarCardapio(),
                 "08:00 - 22:00",
-                1L
+                2L
         );
 
         assertNotNull(resultado);
         assertEquals("Restaurante Teste", resultado.getNome());
         assertEquals("Italiana", resultado.getTipoCozinha());
         assertEquals("08:00 - 22:00", resultado.getHorarioFuncionamento());
-        assertEquals(1L, resultado.getDonoId());
+        assertEquals(2L, resultado.getDonoId());
 
         verify(gateway).salvar(any(Restaurante.class));
     }

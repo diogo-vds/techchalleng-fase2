@@ -13,12 +13,12 @@ public class RestauranteEntity {
     private Long id;
     @Column(nullable = false)
     private String nome;
-    @OneToOne
+    @OneToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "endereco_id", nullable = false)
     private EnderecoEntity endereco;
     @Column(nullable = false)
     private String tipoCozinha;
-    @ManyToOne
+    @ManyToOne(optional = false, cascade = CascadeType.ALL)
     @JoinColumn(name = "cardapio_id", nullable = false)
     private CardapioEntity cardapio;
     @Column(nullable = false)
