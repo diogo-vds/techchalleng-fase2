@@ -40,6 +40,24 @@ public class UsuarioGatewayImpl implements UsuarioGateway {
     }
 
     @Override
+    public Optional<Usuario> buscarPorEmail(String email) {
+        return usuarioRepository.findByEmailIgnoreCase(email)
+                .map(this::toDomain);
+    }
+
+    @Override
+    public Optional<Usuario> buscarPorTelefone(String telefone) {
+        return usuarioRepository.findByTelefone(telefone)
+                .map(this::toDomain);
+    }
+
+    @Override
+    public Optional<Usuario> buscarPorCpf(String cpf) {
+        return usuarioRepository.findByCpf(cpf)
+                .map(this::toDomain);
+    }
+
+    @Override
     public List<Usuario> listarTodos() {
         return usuarioRepository.findAll()
                 .stream()

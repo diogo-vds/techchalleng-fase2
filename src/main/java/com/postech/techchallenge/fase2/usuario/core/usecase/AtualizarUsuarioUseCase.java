@@ -23,12 +23,14 @@ public class AtualizarUsuarioUseCase {
         Usuario usuarioExistente = usuarioGateway
                 .buscarPorId(input.id())
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Usuário não encontrado"));
+                        new IllegalArgumentException("Usuario nao encontrado"));
+
+        validarDuplicidade(input.id(), input.email(), input.telefone(), input.cpf());
 
         TipoUsuario tipoUsuario = tipoUsuarioGateway
                 .buscarPorId(input.tipoUsuarioId())
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Tipo de usuário não encontrado"));
+                        new IllegalArgumentException("Tipo de usuario nao encontrado"));
 
         Usuario usuarioAtualizado = Usuario.reconstruir(
                 usuarioExistente.getId(),
@@ -49,5 +51,25 @@ public class AtualizarUsuarioUseCase {
                 salvo.getCpf(),
                 salvo.getTipoUsuario().getDescricao()
         );
+    }
+
+    private void validarDuplicidade(Long usuarioId, String email, String telefone, String cpf) {
+        usuarioGateway.buscarPorEmail(email)
+                .filter(usuario -> !usuario.getId().equals(usuarioId))
+                .ifPresent(usuario -> {
+                    throw new IllegalArgumentException("Email '" + email + "' ja cadastrado");
+                });
+
+        usuarioGateway.buscarPorTelefone(telefone)
+                .filter(usuario -> !usuario.getId().equals(usuarioId))
+                .ifPresent(usuario -> {
+                    throw new IllegalArgumentException("Telefone '" + telefone + "' ja cadastrado");
+                });
+
+        usuarioGateway.buscarPorCpf(cpf)
+                .filter(usuario -> !usuario.getId().equals(usuarioId))
+                .ifPresent(usuario -> {
+                    throw new IllegalArgumentException("CPF '" + cpf + "' ja cadastrado");
+                });
     }
 }

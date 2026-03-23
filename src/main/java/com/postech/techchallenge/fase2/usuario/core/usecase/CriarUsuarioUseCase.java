@@ -7,7 +7,6 @@ import com.postech.techchallenge.fase2.usuario.core.dto.UsuarioOutput;
 import com.postech.techchallenge.fase2.usuario.core.gateway.TipoUsuarioGateway;
 import com.postech.techchallenge.fase2.usuario.core.gateway.UsuarioGateway;
 
-
 public class CriarUsuarioUseCase {
 
     private final UsuarioGateway usuarioGateway;
@@ -20,11 +19,12 @@ public class CriarUsuarioUseCase {
     }
 
     public UsuarioOutput executar(CriarUsuarioInput input) {
+        validarDuplicidade(input.email(), input.telefone(), input.cpf());
 
         TipoUsuario tipoUsuario = tipoUsuarioGateway
                 .buscarPorId(input.tipoUsuarioId())
                 .orElseThrow(() ->
-                        new IllegalArgumentException("Tipo de usuário não encontrado"));
+                        new IllegalArgumentException("Tipo de usuario nao encontrado"));
 
         Usuario usuario = Usuario.criar(
                 input.nome(),
@@ -44,5 +44,22 @@ public class CriarUsuarioUseCase {
                 salvo.getCpf(),
                 salvo.getTipoUsuario().getDescricao()
         );
+    }
+
+    private void validarDuplicidade(String email, String telefone, String cpf) {
+        usuarioGateway.buscarPorEmail(email)
+                .ifPresent(usuario -> {
+                    throw new IllegalArgumentException("Email '" + email + "' ja cadastrado");
+                });
+
+        usuarioGateway.buscarPorTelefone(telefone)
+                .ifPresent(usuario -> {
+                    throw new IllegalArgumentException("Telefone '" + telefone + "' ja cadastrado");
+                });
+
+        usuarioGateway.buscarPorCpf(cpf)
+                .ifPresent(usuario -> {
+                    throw new IllegalArgumentException("CPF '" + cpf + "' ja cadastrado");
+                });
     }
 }
