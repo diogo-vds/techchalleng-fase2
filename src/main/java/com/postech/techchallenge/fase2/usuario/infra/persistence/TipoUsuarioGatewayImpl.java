@@ -6,6 +6,7 @@ import com.postech.techchallenge.fase2.usuario.infra.persistence.entity.TipoUsua
 import com.postech.techchallenge.fase2.usuario.infra.persistence.repository.TipoUsuarioRepository;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -18,10 +19,39 @@ public class TipoUsuarioGatewayImpl implements TipoUsuarioGateway {
     }
 
     @Override
+    public TipoUsuario salvar(TipoUsuario tipoUsuario) {
+        TipoUsuarioEntity entity = new TipoUsuarioEntity();
+        entity.setId(tipoUsuario.getId());
+        entity.setNome(tipoUsuario.getDescricao());
+
+        TipoUsuarioEntity salvo = tipoUsuarioRepository.save(entity);
+        return toDomain(salvo);
+    }
+
+    @Override
     public Optional<TipoUsuario> buscarPorId(Long id) {
         return tipoUsuarioRepository
                 .findById(id)
                 .map(this::toDomain);
+    }
+
+    @Override
+    public Optional<TipoUsuario> buscarPorDescricao(String descricao) {
+        return tipoUsuarioRepository.findByNomeIgnoreCase(descricao)
+                .map(this::toDomain);
+    }
+
+    @Override
+    public List<TipoUsuario> listarTodos() {
+        return tipoUsuarioRepository.findAll()
+                .stream()
+                .map(this::toDomain)
+                .toList();
+    }
+
+    @Override
+    public void deletar(Long id) {
+        tipoUsuarioRepository.deleteById(id);
     }
 
     private TipoUsuario toDomain(TipoUsuarioEntity entity) {

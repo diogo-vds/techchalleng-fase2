@@ -4,4 +4,6 @@ import com.postech.techchallenge.fase2.usuario.infra.persistence.entity.TipoUsua
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface TipoUsuarioRepository extends JpaRepository<TipoUsuarioEntity, Long> {
+
+    java.util.Optional<TipoUsuarioEntity> findByNomeIgnoreCase(String nome);
 }
