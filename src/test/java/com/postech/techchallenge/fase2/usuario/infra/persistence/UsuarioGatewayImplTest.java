@@ -124,6 +124,45 @@ class UsuarioGatewayImplTest {
     }
 
     @Test
+    void deveBuscarUsuarioPorEmail() {
+        UsuarioEntity entity = criarUsuarioEntity();
+
+        when(usuarioRepository.findByEmailIgnoreCase("joao@email.com"))
+                .thenReturn(Optional.of(entity));
+
+        Optional<Usuario> resultado = gateway.buscarPorEmail("joao@email.com");
+
+        assertTrue(resultado.isPresent());
+        assertEquals("joao@email.com", resultado.get().getEmail());
+    }
+
+    @Test
+    void deveBuscarUsuarioPorTelefone() {
+        UsuarioEntity entity = criarUsuarioEntity();
+
+        when(usuarioRepository.findByTelefone("123456789"))
+                .thenReturn(Optional.of(entity));
+
+        Optional<Usuario> resultado = gateway.buscarPorTelefone("123456789");
+
+        assertTrue(resultado.isPresent());
+        assertEquals("123456789", resultado.get().getTelefone());
+    }
+
+    @Test
+    void deveBuscarUsuarioPorCpf() {
+        UsuarioEntity entity = criarUsuarioEntity();
+
+        when(usuarioRepository.findByCpf("12345678900"))
+                .thenReturn(Optional.of(entity));
+
+        Optional<Usuario> resultado = gateway.buscarPorCpf("12345678900");
+
+        assertTrue(resultado.isPresent());
+        assertEquals("12345678900", resultado.get().getCpf());
+    }
+
+    @Test
     void deveRetornarVazioQuandoUsuarioNaoExiste() {
 
         when(usuarioRepository.findById(1L))

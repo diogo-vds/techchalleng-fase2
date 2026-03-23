@@ -14,12 +14,15 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-public class AtualizarUsuarioUseCaseTest {
+class AtualizarUsuarioUseCaseTest {
 
     @Mock
     private UsuarioGateway usuarioGateway;
@@ -32,50 +35,96 @@ public class AtualizarUsuarioUseCaseTest {
 
     @Test
     void deveAtualizarUsuarioComSucesso() {
-        // Arrange
-        AtualizarUsuarioInput input = new AtualizarUsuarioInput(10L, "João Atualizado", "joao@email.com", "41999999999", "12345678900", 1L);
+        AtualizarUsuarioInput input = new AtualizarUsuarioInput(10L, "Joao Atualizado", "joao@email.com", "41999999999", "12345678900", 1L);
         TipoUsuario tipoAntigo = new TipoUsuario(2L, "CLIENTE");
-        Usuario usuarioExistente = Usuario.reconstruir(10L, "João", "joao@email.com", "41999999999", "12345678900", tipoAntigo);
+        Usuario usuarioExistente = Usuario.reconstruir(10L, "Joao", "joao@email.com", "41999999999", "12345678900", tipoAntigo);
         TipoUsuario tipoNovo = new TipoUsuario(1L, "ADMIN");
-        Usuario usuarioAtualizado = Usuario.reconstruir(10L, "João Atualizado", "joao@email.com", "41999999999", "12345678900", tipoNovo);
+        Usuario usuarioAtualizado = Usuario.reconstruir(10L, "Joao Atualizado", "joao@email.com", "41999999999", "12345678900", tipoNovo);
 
         when(usuarioGateway.buscarPorId(10L)).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorEmail("joao@email.com")).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorTelefone("41999999999")).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorCpf("12345678900")).thenReturn(Optional.of(usuarioExistente));
         when(tipoUsuarioGateway.buscarPorId(1L)).thenReturn(Optional.of(tipoNovo));
         when(usuarioGateway.salvar(any(Usuario.class))).thenReturn(usuarioAtualizado);
 
-        // Act
         UsuarioOutput output = useCase.executar(input);
 
-        // Assert
         assertEquals(10L, output.id());
-        assertEquals("João Atualizado", output.nome());
+        assertEquals("Joao Atualizado", output.nome());
         assertEquals("ADMIN", output.tipoUsuario());
     }
 
     @Test
     void deveLancarExcecaoQuandoUsuarioNaoEncontrado() {
-        // Arrange
-        AtualizarUsuarioInput input = new AtualizarUsuarioInput(10L, "João", "joao@email.com", "41999999999", "12345678900", 1L);
+        AtualizarUsuarioInput input = new AtualizarUsuarioInput(10L, "Joao", "joao@email.com", "41999999999", "12345678900", 1L);
 
         when(usuarioGateway.buscarPorId(10L)).thenReturn(Optional.empty());
 
-        // Act & Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> useCase.executar(input));
-        assertEquals("Usuário não encontrado", exception.getMessage());
+        assertEquals("Usuario nao encontrado", exception.getMessage());
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoEmailJaExistirParaOutroUsuario() {
+        AtualizarUsuarioInput input = new AtualizarUsuarioInput(10L, "Joao", "joao@email.com", "41999999999", "12345678900", 1L);
+        Usuario usuarioExistente = Usuario.reconstruir(10L, "Joao", "joao@email.com", "41999999999", "12345678900", new TipoUsuario(2L, "CLIENTE"));
+        Usuario usuarioComMesmoEmail = Usuario.reconstruir(11L, "Maria", "joao@email.com", "41888888888", "99999999999", new TipoUsuario(2L, "CLIENTE"));
+
+        when(usuarioGateway.buscarPorId(10L)).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorEmail("joao@email.com")).thenReturn(Optional.of(usuarioComMesmoEmail));
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> useCase.executar(input));
+
+        assertEquals("Email 'joao@email.com' ja cadastrado", exception.getMessage());
+        verify(usuarioGateway, never()).salvar(any(Usuario.class));
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoTelefoneJaExistirParaOutroUsuario() {
+        AtualizarUsuarioInput input = new AtualizarUsuarioInput(10L, "Joao", "joao@email.com", "41999999999", "12345678900", 1L);
+        Usuario usuarioExistente = Usuario.reconstruir(10L, "Joao", "joao@email.com", "41999999999", "12345678900", new TipoUsuario(2L, "CLIENTE"));
+        Usuario usuarioComMesmoTelefone = Usuario.reconstruir(11L, "Maria", "maria@email.com", "41999999999", "99999999999", new TipoUsuario(2L, "CLIENTE"));
+
+        when(usuarioGateway.buscarPorId(10L)).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorEmail("joao@email.com")).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorTelefone("41999999999")).thenReturn(Optional.of(usuarioComMesmoTelefone));
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> useCase.executar(input));
+
+        assertEquals("Telefone '41999999999' ja cadastrado", exception.getMessage());
+        verify(usuarioGateway, never()).salvar(any(Usuario.class));
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoCpfJaExistirParaOutroUsuario() {
+        AtualizarUsuarioInput input = new AtualizarUsuarioInput(10L, "Joao", "joao@email.com", "41999999999", "12345678900", 1L);
+        Usuario usuarioExistente = Usuario.reconstruir(10L, "Joao", "joao@email.com", "41999999999", "12345678900", new TipoUsuario(2L, "CLIENTE"));
+        Usuario usuarioComMesmoCpf = Usuario.reconstruir(11L, "Maria", "maria@email.com", "41888888888", "12345678900", new TipoUsuario(2L, "CLIENTE"));
+
+        when(usuarioGateway.buscarPorId(10L)).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorEmail("joao@email.com")).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorTelefone("41999999999")).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorCpf("12345678900")).thenReturn(Optional.of(usuarioComMesmoCpf));
+
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> useCase.executar(input));
+
+        assertEquals("CPF '12345678900' ja cadastrado", exception.getMessage());
+        verify(usuarioGateway, never()).salvar(any(Usuario.class));
     }
 
     @Test
     void deveLancarExcecaoQuandoTipoUsuarioNaoEncontrado() {
-        // Arrange
-        AtualizarUsuarioInput input = new AtualizarUsuarioInput(10L, "João", "joao@email.com", "41999999999", "12345678900", 1L);
-        TipoUsuario tipo = new TipoUsuario(2L, "CLIENTE");
-        Usuario usuarioExistente = Usuario.reconstruir(10L, "João", "joao@email.com", "41999999999", "12345678900", tipo);
+        AtualizarUsuarioInput input = new AtualizarUsuarioInput(10L, "Joao", "joao@email.com", "41999999999", "12345678900", 1L);
+        Usuario usuarioExistente = Usuario.reconstruir(10L, "Joao", "joao@email.com", "41999999999", "12345678900", new TipoUsuario(2L, "CLIENTE"));
 
         when(usuarioGateway.buscarPorId(10L)).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorEmail("joao@email.com")).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorTelefone("41999999999")).thenReturn(Optional.of(usuarioExistente));
+        when(usuarioGateway.buscarPorCpf("12345678900")).thenReturn(Optional.of(usuarioExistente));
         when(tipoUsuarioGateway.buscarPorId(1L)).thenReturn(Optional.empty());
 
-        // Act & Assert
         IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> useCase.executar(input));
-        assertEquals("Tipo de usuário não encontrado", exception.getMessage());
+        assertEquals("Tipo de usuario nao encontrado", exception.getMessage());
     }
 }

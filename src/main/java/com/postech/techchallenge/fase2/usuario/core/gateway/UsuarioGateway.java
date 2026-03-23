@@ -10,6 +10,12 @@ public interface UsuarioGateway {
 
     Optional<Usuario> buscarPorId(Long id);
 
+    Optional<Usuario> buscarPorEmail(String email);
+
+    Optional<Usuario> buscarPorTelefone(String telefone);
+
+    Optional<Usuario> buscarPorCpf(String cpf);
+
     List<Usuario> listarTodos();
 
     void deletar(Long id);

@@ -1,0 +1,536 @@
+{
+  "info": {
+    "_postman_id": "0b7d2ef7-7a72-4f5b-89fd-7a1ee2d0f201",
+    "name": "TechChallenge Fase2",
+    "description": "Collection com todos os endpoints expostos pelos controllers do projeto.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "Usuarios",
+      "item": [
+        {
+          "name": "Criar Usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Joao Silva\",\n  \"email\": \"joao@email.com\",\n  \"telefone\": \"41999999999\",\n  \"cpf\": \"12345678900\",\n  \"tipoUsuarioId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar Usuario Por Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar Usuarios",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/usuarios",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Atualizar Usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Joao Atualizado\",\n  \"email\": \"joao.atualizado@email.com\",\n  \"telefone\": \"41988888888\",\n  \"cpf\": \"12345678900\",\n  \"tipoUsuarioId\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Deletar Usuario",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/usuarios/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "usuarios",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Tipos Usuario",
+      "item": [
+        {
+          "name": "Criar Tipo Usuario",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descricao\": \"CLIENTE\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tipos-usuario",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tipos-usuario"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar Tipo Usuario Por Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/tipos-usuario/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tipos-usuario",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar Tipos Usuario",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/tipos-usuario",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tipos-usuario"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Atualizar Tipo Usuario",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"descricao\": \"ADMIN\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/tipos-usuario/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tipos-usuario",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Deletar Tipo Usuario",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/tipos-usuario/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "tipos-usuario",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Enderecos",
+      "item": [
+        {
+          "name": "Criar Endereco",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": null,\n  \"rua\": \"Rua das Flores\",\n  \"numero\": \"123\",\n  \"complemento\": \"Apto 45\",\n  \"bairro\": \"Centro\",\n  \"cidade\": \"Curitiba\",\n  \"uf\": \"PR\",\n  \"cep\": \"80000000\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/enderecos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "enderecos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar Endereco Por Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/enderecos/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "enderecos",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar Enderecos",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/enderecos",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "enderecos"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Atualizar Endereco",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"rua\": \"Rua das Palmeiras\",\n  \"numero\": \"456\",\n  \"complemento\": \"Casa\",\n  \"bairro\": \"Batel\",\n  \"cidade\": \"Curitiba\",\n  \"uf\": \"PR\",\n  \"cep\": \"80250000\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/enderecos/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "enderecos",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Deletar Endereco",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/enderecos/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "enderecos",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Cardapio",
+      "item": [
+        {
+          "name": "Criar Cardapio",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": null,\n  \"nome\": \"Hamburguer Artesanal\",\n  \"descricao\": \"Pao brioche, carne 180g e queijo\",\n  \"preco\": 32.90,\n  \"disponivelApenasRestaurante\": false,\n  \"caminhoFoto\": \"/imagens/hamburguer.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cardapio",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cardapio"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar Cardapio Por Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/cardapio/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cardapio",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar Cardapio",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/cardapio",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cardapio"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Atualizar Cardapio",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": 1,\n  \"nome\": \"Hamburguer Artesanal Bacon\",\n  \"descricao\": \"Pao brioche, carne 180g, queijo e bacon\",\n  \"preco\": 36.90,\n  \"disponivelApenasRestaurante\": true,\n  \"caminhoFoto\": \"/imagens/hamburguer-bacon.jpg\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/cardapio/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cardapio",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Deletar Cardapio",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/cardapio/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "cardapio",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Restaurantes",
+      "item": [
+        {
+          "name": "Criar Restaurante",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Restaurante Sabor Caseiro\",\n  \"endereco\": {\n    \"id\": 1,\n    \"rua\": \"Rua das Flores\",\n    \"numero\": \"123\",\n    \"complemento\": \"Loja 1\",\n    \"bairro\": \"Centro\",\n    \"cidade\": \"Curitiba\",\n    \"uf\": \"PR\",\n    \"cep\": \"80000000\"\n  },\n  \"tipo_cozinha\": \"Brasileira\",\n  \"cardapio\": {\n    \"id\": 1,\n    \"nome\": \"Prato Executivo\",\n    \"descricao\": \"Arroz, feijao, carne e salada\",\n    \"preco\": 29.90,\n    \"disponivelApenasRestaurante\": false,\n    \"caminhoFoto\": \"/imagens/prato-executivo.jpg\"\n  },\n  \"horario_funcionamento\": \"Seg a Sex 11:00-22:00\",\n  \"dono_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurantes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "restaurantes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Buscar Restaurante Por Id",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurantes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "restaurantes",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Listar Restaurantes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurantes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "restaurantes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Atualizar Restaurante",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Restaurante Sabor Atualizado\",\n  \"endereco\": {\n    \"id\": 1,\n    \"rua\": \"Rua das Palmeiras\",\n    \"numero\": \"500\",\n    \"complemento\": \"Sala 2\",\n    \"bairro\": \"Batel\",\n    \"cidade\": \"Curitiba\",\n    \"uf\": \"PR\",\n    \"cep\": \"80250000\"\n  },\n  \"tipo_cozinha\": \"Contemporanea\",\n  \"cardapio\": {\n    \"id\": 1,\n    \"nome\": \"Menu Degustacao\",\n    \"descricao\": \"Sequencia de pratos da casa\",\n    \"preco\": 89.90,\n    \"disponivelApenasRestaurante\": true,\n    \"caminhoFoto\": \"/imagens/menu-degustacao.jpg\"\n  },\n  \"horario_funcionamento\": \"Todos os dias 12:00-23:00\",\n  \"dono_id\": 1\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurantes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "restaurantes",
+                "1"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Deletar Restaurante",
+          "request": {
+            "method": "DELETE",
+            "url": {
+              "raw": "{{baseUrl}}/api/restaurantes/1",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "restaurantes",
+                "1"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
