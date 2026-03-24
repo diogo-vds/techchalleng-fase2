@@ -5,7 +5,7 @@ import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -22,9 +22,7 @@ class RestauranteResponseDTOTest {
         return Cardapio.criar(
                 "Pizza",
                 "Descrição",
-                new BigDecimal("50.00"),
-                true,
-                "/img.png"
+                Collections.emptyList()
         );
     }
 

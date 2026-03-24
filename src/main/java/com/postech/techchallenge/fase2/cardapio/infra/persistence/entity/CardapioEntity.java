@@ -1,7 +1,6 @@
 package com.postech.techchallenge.fase2.cardapio.infra.persistence.entity;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "cardapio")
@@ -13,6 +12,9 @@ public class CardapioEntity {
 
     @Column(nullable = false)
     private String nome;
+
+    @Column(nullable = false)
+    private String descricao;
 
     public Long getId() {
         return id;
@@ -30,4 +32,11 @@ public class CardapioEntity {
         this.nome = nome;
     }
 
+    public String getDescricao() {
+        return descricao;
+    }
+
+    public void setDescricao(String descricao) {
+        this.descricao = descricao;
+    }
 }

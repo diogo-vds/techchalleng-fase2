@@ -2,7 +2,6 @@ package com.postech.techchallenge.fase2.cardapio.core.usecase;
 
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
-import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
 
 public class BuscarCardapioPorIdUseCase {
@@ -27,17 +26,8 @@ public class BuscarCardapioPorIdUseCase {
         return new CardapioOutput(
                 cardapio.getId(),
                 cardapio.getNome(),
-                cardapio.getItens().stream().map(
-                        item -> new ItemCardapioOutput(
-                                item.getId(),
-                                item.getCardapioId(),
-                                item.getNome(),
-                                item.getDescricao(),
-                                item.getPreco(),
-                                item.getDisponivelApenasRestaurante(),
-                                item.getCaminhoFoto()
-
-                        )
-        ).toList());
+                cardapio.getDescricao(),
+                cardapio.getItens()
+        );
     }
 }

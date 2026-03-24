@@ -1,7 +1,7 @@
 package com.postech.techchallenge.fase2.cardapio.infra.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioInput;
+import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioInput;
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.usecase.*;
 import org.junit.jupiter.api.Test;
@@ -11,7 +11,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 
-import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 import static org.mockito.Mockito.when;
@@ -44,12 +44,12 @@ class CardapioControllerTest {
 
     @Test
     void deveCriarCardapio() throws Exception {
-        ItemCardapioInput input = new ItemCardapioInput(
-                null, "Hamburguer", "Delicioso", new BigDecimal("25.00"), true, "/foto.jpg"
+        CardapioInput input = new CardapioInput(
+                null, "Hamburguer", "Delicioso", Collections.emptyList()
         );
 
         CardapioOutput output = new CardapioOutput(
-                1L, "Hamburguer", "Delicioso", new BigDecimal("25.00"), true, "/foto.jpg"
+                1L, "Hamburguer", "Delicioso", Collections.emptyList()
         );
 
         when(criarCardapioUseCase.executar(Mockito.any())).thenReturn(output);
@@ -63,7 +63,7 @@ class CardapioControllerTest {
     @Test
     void deveBuscarCardapioPorId() throws Exception {
         CardapioOutput output = new CardapioOutput(
-                1L, "Hamburguer", "Delicioso", new BigDecimal("25.00"), true, "/foto.jpg"
+                1L, "Hamburguer", "Delicioso", Collections.emptyList()
         );
 
         when(buscarCardapioPorIdUseCase.executar(1L)).thenReturn(output);
@@ -75,7 +75,7 @@ class CardapioControllerTest {
     @Test
     void deveListarCardapios() throws Exception {
         CardapioOutput output = new CardapioOutput(
-                1L, "Hamburguer", "Delicioso", new BigDecimal("25.00"), true, "/foto.jpg"
+                1L, "Hamburguer", "Delicioso", Collections.emptyList()
         );
 
         when(listarCardapioUseCase.executar()).thenReturn(List.of(output));
@@ -86,12 +86,12 @@ class CardapioControllerTest {
 
     @Test
     void deveAtualizarCardapio() throws Exception {
-        ItemCardapioInput input = new ItemCardapioInput(
-                null, "Hamburguer Atualizado", "Mais gostoso", new BigDecimal("30.00"), false, "/nova.jpg"
+        CardapioInput input = new CardapioInput(
+                null, "Hamburguer Atualizado", "Mais gostoso", Collections.emptyList()
         );
 
         CardapioOutput output = new CardapioOutput(
-                1L, "Hamburguer Atualizado", "Mais gostoso", new BigDecimal("30.00"), false, "/nova.jpg"
+                1L, "Hamburguer Atualizado", "Mais gostoso", Collections.emptyList()
         );
 
         when(atualizarCardapioUseCase.executar(Mockito.any())).thenReturn(output);

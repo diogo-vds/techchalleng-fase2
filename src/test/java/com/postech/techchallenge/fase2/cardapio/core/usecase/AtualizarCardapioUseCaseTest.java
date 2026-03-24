@@ -1,14 +1,14 @@
 package com.postech.techchallenge.fase2.cardapio.core.usecase;
 
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
-import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioInput;
+import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioInput;
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,27 +32,21 @@ class AtualizarCardapioUseCaseTest {
                 1L,
                 "Antigo",
                 "Descricao Antiga",
-                new BigDecimal("10.00"),
-                false,
-                "/foto.jpg"
+                Collections.emptyList()
         );
 
-        ItemCardapioInput input = new ItemCardapioInput(
+        CardapioInput input = new CardapioInput(
                 1L,
                 "Novo",
                 "Descricao Nova",
-                new BigDecimal("15.00"),
-                true,
-                "/nova_foto.jpg"
+                Collections.emptyList()
         );
 
         Cardapio cardapioAtualizado = Cardapio.reconstruir(
                 1L,
                 "Novo",
                 "Descricao Nova",
-                new BigDecimal("15.00"),
-                true,
-                "/nova_foto.jpg"
+                Collections.emptyList()
         );
 
         when(cardapioGateway.buscarPorId(1L)).thenReturn(Optional.of(cardapioExistente));
@@ -64,7 +58,6 @@ class AtualizarCardapioUseCaseTest {
         assertEquals(1L, output.id());
         assertEquals("Novo", output.nome());
         assertEquals("Descricao Nova", output.descricao());
-        assertEquals(new BigDecimal("15.00"), output.preco());
 
         verify(cardapioGateway, times(1)).buscarPorId(1L);
         verify(cardapioGateway, times(1)).salvar(any(Cardapio.class));
@@ -72,13 +65,11 @@ class AtualizarCardapioUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoCardapioNaoExistir() {
-        ItemCardapioInput input = new ItemCardapioInput(
+        CardapioInput input = new CardapioInput(
                 1L,
                 "Novo",
                 "Descricao Nova",
-                new BigDecimal("15.00"),
-                true,
-                "/nova_foto.jpg"
+                Collections.emptyList()
         );
 
         when(cardapioGateway.buscarPorId(1L)).thenReturn(Optional.empty());
@@ -107,13 +98,11 @@ class AtualizarCardapioUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoIdForNulo() {
-        ItemCardapioInput input = new ItemCardapioInput(
+        CardapioInput input = new CardapioInput(
                 null,
                 "Novo",
                 "Descricao Nova",
-                new BigDecimal("15.00"),
-                true,
-                "/nova_foto.jpg"
+                Collections.emptyList()
         );
 
         IllegalArgumentException exception = assertThrows(

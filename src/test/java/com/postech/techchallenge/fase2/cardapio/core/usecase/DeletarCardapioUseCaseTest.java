@@ -5,7 +5,7 @@ import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -29,9 +29,7 @@ class DeletarCardapioUseCaseTest {
                 1L,
                 "X-Salada",
                 "Hamburguer",
-                new BigDecimal("20.00"),
-                false,
-                "/foto.jpg"
+                Collections.emptyList()
         );
 
         when(cardapioGateway.buscarPorId(id)).thenReturn(Optional.of(cardapio));

@@ -1,9 +1,12 @@
 package com.postech.techchallenge.fase2.cardapio.infra.gateway;
 
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
+import com.postech.techchallenge.fase2.cardapio.core.domain.ItemCardapio;
 import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
 import com.postech.techchallenge.fase2.cardapio.infra.persistence.entity.CardapioEntity;
+import com.postech.techchallenge.fase2.cardapio.infra.persistence.entity.ItemCardapioEntity;
 import com.postech.techchallenge.fase2.cardapio.infra.persistence.repository.CardapioRepository;
+import com.postech.techchallenge.fase2.cardapio.infra.persistence.repository.ItemCardapioRepository;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,9 +16,11 @@ import java.util.Optional;
 public class CardapioGatewayImpl implements CardapioGateway {
 
     private final CardapioRepository cardapioRepository;
+    private final ItemCardapioRepository itemCardapioRepository;
 
-    public CardapioGatewayImpl(CardapioRepository cardapioRepository) {
+    public CardapioGatewayImpl(CardapioRepository cardapioRepository, ItemCardapioRepository itemCardapioRepository) {
         this.cardapioRepository = cardapioRepository;
+        this.itemCardapioRepository = itemCardapioRepository;
     }
 
     @Override
@@ -47,20 +52,24 @@ public class CardapioGatewayImpl implements CardapioGateway {
         }
         entity.setNome(cardapio.getNome());
         entity.setDescricao(cardapio.getDescricao());
-        entity.setPreco(cardapio.getPreco());
-        entity.setDisponivelApenasRestaurante(cardapio.getDisponivelApenasRestaurante());
-        entity.setCaminhoFoto(cardapio.getCaminhoFoto());
         return entity;
     }
 
     public Cardapio toDomain(CardapioEntity entity) {
+        List<ItemCardapioEntity> itens = itemCardapioRepository.findByCardapioId(entity.getId());
         return Cardapio.reconstruir(
                 entity.getId(),
                 entity.getNome(),
                 entity.getDescricao(),
-                entity.getPreco(),
-                entity.getDisponivelApenasRestaurante(),
-                entity.getCaminhoFoto()
+                itens.stream().map(item -> ItemCardapio.reconstruir(
+                        item.getId(),
+                        item.getCardapio().getId(),
+                        item.getNome(),
+                        item.getDescricao(),
+                        item.getPreco(),
+                        item.getDisponivelApenasRestaurante(),
+                        item.getCaminhoFoto()
+                )).toList()
         );
     }
 }

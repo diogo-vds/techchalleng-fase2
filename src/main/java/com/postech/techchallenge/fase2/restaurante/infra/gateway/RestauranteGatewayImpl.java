@@ -1,16 +1,15 @@
 package com.postech.techchallenge.fase2.restaurante.infra.gateway;
 
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
-import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
-import com.postech.techchallenge.fase2.cardapio.infra.gateway.CardapioGatewayImpl;
+import com.postech.techchallenge.fase2.cardapio.core.domain.ItemCardapio;
 import com.postech.techchallenge.fase2.cardapio.infra.persistence.entity.CardapioEntity;
+import com.postech.techchallenge.fase2.cardapio.infra.persistence.repository.ItemCardapioRepository;
 import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
 import com.postech.techchallenge.fase2.endereco.infra.persistence.entity.EnderecoEntity;
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGateway;
 import com.postech.techchallenge.fase2.restaurante.infra.persistence.entity.RestauranteEntity;
 import com.postech.techchallenge.fase2.restaurante.infra.persistence.repository.RestauranteRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -19,8 +18,14 @@ import java.util.Optional;
 @Component
 public class RestauranteGatewayImpl implements RestauranteGateway {
 
-    @Autowired
-    private RestauranteRepository restauranteRepository;
+
+    private final RestauranteRepository restauranteRepository;
+    private final ItemCardapioRepository itemCardapioRepository;
+
+    public RestauranteGatewayImpl(RestauranteRepository restauranteRepository, ItemCardapioRepository itemCardapioRepository) {
+        this.restauranteRepository = restauranteRepository;
+        this.itemCardapioRepository = itemCardapioRepository;
+    }
 
     @Override
     public Restaurante salvar(Restaurante restaurante) {
@@ -74,20 +79,26 @@ public class RestauranteGatewayImpl implements RestauranteGateway {
         }
         entity.setNome(cardapio.getNome());
         entity.setDescricao(cardapio.getDescricao());
-        entity.setPreco(cardapio.getPreco());
-        entity.setDisponivelApenasRestaurante(cardapio.getDisponivelApenasRestaurante());
-        entity.setCaminhoFoto(cardapio.getCaminhoFoto());
         return entity;
     }
 
     public Cardapio toDomain(CardapioEntity entity) {
+        List<ItemCardapio> itens = itemCardapioRepository.findByCardapioId(entity.getId())
+                .stream()
+                .map(item -> ItemCardapio.reconstruir(
+                        item.getId(),
+                        item.getCardapio().getId(),
+                        item.getNome(),
+                        item.getDescricao(),
+                        item.getPreco(),
+                        item.getDisponivelApenasRestaurante(),
+                        item.getCaminhoFoto()
+                )).toList();
         return Cardapio.reconstruir(
                 entity.getId(),
                 entity.getNome(),
                 entity.getDescricao(),
-                entity.getPreco(),
-                entity.getDisponivelApenasRestaurante(),
-                entity.getCaminhoFoto()
+                itens
         );
     }
 

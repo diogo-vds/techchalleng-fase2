@@ -7,7 +7,7 @@ import com.postech.techchallenge.fase2.restaurante.core.gateway.RestauranteGatew
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -34,9 +34,7 @@ class CriarRestauranteUseCaseTest {
         return Cardapio.criar(
                 "Pizza",
                 "Descrição",
-                new BigDecimal("50.00"),
-                true,
-                "/img.png"
+                Collections.emptyList()
         );
     }
 

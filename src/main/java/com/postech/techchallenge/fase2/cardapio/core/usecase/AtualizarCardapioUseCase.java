@@ -1,11 +1,8 @@
 package com.postech.techchallenge.fase2.cardapio.core.usecase;
 
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
-import com.postech.techchallenge.fase2.cardapio.core.domain.ItemCardapio;
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioInput;
-import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioInput;
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
-import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
 
 public class AtualizarCardapioUseCase {
@@ -34,17 +31,8 @@ public class AtualizarCardapioUseCase {
         Cardapio cardapioAtualizado = Cardapio.reconstruir(
                 cardapioExistente.getId(),
                 input.nome(),
-                input.itens().stream().map(
-                        item -> ItemCardapio.reconstruir(
-                                item.id(),
-                                item.cardapioId(),
-                                item.nome(),
-                                item.descricao(),
-                                item.preco(),
-                                item.disponivelApenasRestaurante(),
-                                item.caminhoFoto()
-                        )
-                ).toList()
+                input.descricao(),
+                input.itens()
         );
 
         Cardapio salvo = cardapioGateway.salvar(cardapioAtualizado);
@@ -52,16 +40,7 @@ public class AtualizarCardapioUseCase {
         return new CardapioOutput(
                 salvo.getId(),
                 salvo.getNome(),
-                salvo.getItens().stream().map(
-                        item -> new ItemCardapioOutput(
-                                item.getId(),
-                                item.getCardapioId(),
-                                item.getNome(),
-                                item.getDescricao(),
-                                item.getPreco(),
-                                item.getDisponivelApenasRestaurante(),
-                                item.getCaminhoFoto()
-                        )).toList()
-        );
+                salvo.getDescricao(),
+                salvo.getItens()        );
     }
 }

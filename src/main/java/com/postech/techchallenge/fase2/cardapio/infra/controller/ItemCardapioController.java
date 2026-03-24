@@ -1,7 +1,7 @@
 package com.postech.techchallenge.fase2.cardapio.infra.controller;
 
-import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioInput;
-import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
+import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioInput;
+import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.usecase.*;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,64 +9,68 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/cardapio")
+@RequestMapping("/item-cardapio")
 public class ItemCardapioController {
 
-    private final CriarCardapioUseCase criarCardapioUseCase;
-    private final AtualizarCardapioUseCase atualizarCardapioUseCase;
-    private final DeletarCardapioUseCase deletarCardapioUseCase;
-    private final BuscarCardapioPorIdUseCase buscarCardapioPorIdUseCase;
-    private final ListarCardapioUseCase listarCardapioUseCase;
+    private final CriarItemCardapioUseCase criarItemCardapioUseCase;
+    private final AtualizarItemCardapioUseCase atualizarItemCardapioUseCase;
+    private final DeletarItemCardapioUseCase deletarItemCardapioUseCase;
+    private final BuscarItemCardapioPorIdUseCase buscarItemCardapioPorIdUseCase;
+    private final ListarItemCardapioUseCase listarItemCardapioUseCase;
 
     public ItemCardapioController(
-            CriarCardapioUseCase criarCardapioUseCase,
-            AtualizarCardapioUseCase atualizarCardapioUseCase,
-            DeletarCardapioUseCase deletarCardapioUseCase,
-            BuscarCardapioPorIdUseCase buscarCardapioPorIdUseCase,
-            ListarCardapioUseCase listarCardapioUseCase) {
+            CriarItemCardapioUseCase criarItemCardapioUseCase,
+            AtualizarItemCardapioUseCase atualizarItemCardapioUseCase,
+            DeletarItemCardapioUseCase deletarItemCardapioUseCase,
+            BuscarItemCardapioPorIdUseCase buscarItemCardapioPorIdUseCase,
+            ListarItemCardapioUseCase listarItemCardapioUseCase) {
 
-        this.criarCardapioUseCase = criarCardapioUseCase;
-        this.atualizarCardapioUseCase = atualizarCardapioUseCase;
-        this.deletarCardapioUseCase = deletarCardapioUseCase;
-        this.buscarCardapioPorIdUseCase = buscarCardapioPorIdUseCase;
-        this.listarCardapioUseCase = listarCardapioUseCase;
+        this.criarItemCardapioUseCase = criarItemCardapioUseCase;
+        this.atualizarItemCardapioUseCase = atualizarItemCardapioUseCase;
+        this.deletarItemCardapioUseCase = deletarItemCardapioUseCase;
+        this.buscarItemCardapioPorIdUseCase = buscarItemCardapioPorIdUseCase;
+        this.listarItemCardapioUseCase = listarItemCardapioUseCase;
     }
 
     @PostMapping
-    public ResponseEntity<CardapioOutput> criar(@RequestBody CardapioInput input) {
-        CardapioOutput output = criarCardapioUseCase.executar(input);
+    public ResponseEntity<ItemCardapioOutput> criar(@RequestBody ItemCardapioInput input) {
+        ItemCardapioOutput output = criarItemCardapioUseCase.executar(input);
         return ResponseEntity.ok(output);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CardapioOutput> atualizar(
+    public ResponseEntity<ItemCardapioOutput> atualizar(
             @PathVariable Long id,
-            @RequestBody CardapioInput input) {
+            @RequestBody ItemCardapioInput input) {
 
-        CardapioInput inputComId = new CardapioInput(
+        ItemCardapioInput inputComId = new ItemCardapioInput(
                 id,
+                input.cardapioId(),
                 input.nome(),
-                input.itens()
+                input.descricao(),
+                input.preco(),
+                input.disponivelApenasRestaurante(),
+                input.caminhoFoto()
         );
 
-        CardapioOutput output = atualizarCardapioUseCase.executar(inputComId);
+        ItemCardapioOutput output = atualizarItemCardapioUseCase.executar(inputComId);
         return ResponseEntity.ok(output);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CardapioOutput> buscarPorId(@PathVariable Long id) {
-        CardapioOutput output = buscarCardapioPorIdUseCase.executar(id);
+    public ResponseEntity<ItemCardapioOutput> buscarPorId(@PathVariable Long id) {
+        ItemCardapioOutput output = buscarItemCardapioPorIdUseCase.executar(id);
         return ResponseEntity.ok(output);
     }
 
     @GetMapping
-    public ResponseEntity<List<CardapioOutput>> listar() {
-        return ResponseEntity.ok(listarCardapioUseCase.executar());
+    public ResponseEntity<List<ItemCardapioOutput>> listar() {
+        return ResponseEntity.ok(listarItemCardapioUseCase.executar());
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deletar(@PathVariable Long id) {
-        deletarCardapioUseCase.executar(id);
+        deletarItemCardapioUseCase.executar(id);
         return ResponseEntity.noContent().build();
     }
 }

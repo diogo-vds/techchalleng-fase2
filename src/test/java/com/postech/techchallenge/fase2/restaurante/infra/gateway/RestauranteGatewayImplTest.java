@@ -1,6 +1,7 @@
 package com.postech.techchallenge.fase2.restaurante.infra.gateway;
 
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
+import com.postech.techchallenge.fase2.cardapio.infra.persistence.repository.ItemCardapioRepository;
 import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
 import com.postech.techchallenge.fase2.restaurante.core.domain.Restaurante;
 import com.postech.techchallenge.fase2.restaurante.infra.persistence.entity.RestauranteEntity;
@@ -9,7 +10,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Field;
-import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -19,12 +20,14 @@ import static org.mockito.Mockito.*;
 class RestauranteGatewayImplTest {
 
     private RestauranteRepository repository;
+    private ItemCardapioRepository itemCardapioRepository;
     private RestauranteGatewayImpl gateway;
 
     @BeforeEach
     void setup() throws Exception {
         repository = mock(RestauranteRepository.class);
-        gateway = new RestauranteGatewayImpl();
+        itemCardapioRepository = mock(ItemCardapioRepository.class);
+        gateway = new RestauranteGatewayImpl(repository, itemCardapioRepository);
 
         Field field = RestauranteGatewayImpl.class
                 .getDeclaredField("restauranteRepository");
@@ -43,9 +46,7 @@ class RestauranteGatewayImplTest {
         return Cardapio.criar(
                 "Pizza",
                 "Descrição",
-                new BigDecimal("50.00"),
-                true,
-                "/img.png"
+                Collections.emptyList()
         );
     }
 
@@ -63,9 +64,6 @@ class RestauranteGatewayImplTest {
         cardapio.setId(1L);
         cardapio.setNome("Pizza");
         cardapio.setDescricao("Descrição");
-        cardapio.setPreco(new BigDecimal("50.00"));
-        cardapio.setDisponivelApenasRestaurante(true);
-        cardapio.setCaminhoFoto("/img.png");
 
         RestauranteEntity entity = new RestauranteEntity();
         entity.setId(id);
@@ -140,6 +138,7 @@ class RestauranteGatewayImplTest {
 
     @Test
     void deveBuscarPorId() {
+        when(itemCardapioRepository.findByCardapioId(1L)).thenReturn(Collections.emptyList());
 
         when(repository.findById(1L))
                 .thenReturn(Optional.of(criarEntityCompleta(1L)));
@@ -162,7 +161,7 @@ class RestauranteGatewayImplTest {
 
     @Test
     void deveListarTodos() {
-
+        when(itemCardapioRepository.findByCardapioId(1L)).thenReturn(Collections.emptyList());
         when(repository.findAll())
                 .thenReturn(List.of(criarEntityCompleta(1L)));
 
@@ -181,7 +180,7 @@ class RestauranteGatewayImplTest {
 
     @Test
     void deveConverterCardapioComId() {
-
+        when(itemCardapioRepository.findByCardapioId(1L)).thenReturn(Collections.emptyList());
         var cardapio = criarCardapio();
 
         var entity = gateway.toEntity(cardapio);
@@ -215,6 +214,7 @@ class RestauranteGatewayImplTest {
     @Test
     void deveConverterRestauranteCompleto() {
 
+        when(itemCardapioRepository.findByCardapioId(1L)).thenReturn(Collections.emptyList());
         var entity = criarEntityCompleta(1L);
 
         var domain = gateway.toDomain(entity);
@@ -241,9 +241,7 @@ class RestauranteGatewayImplTest {
                 99L,
                 "Pizza",
                 "Descricao",
-                new BigDecimal("50.00"),
-                true,
-                "/img.png"
+                Collections.emptyList()
         );
 
         var entity = gateway.toEntity(cardapio);
@@ -253,7 +251,7 @@ class RestauranteGatewayImplTest {
 
     @Test
     void deveConverterRestauranteValidandoTodosCampos() {
-
+        when(itemCardapioRepository.findByCardapioId(1L)).thenReturn(Collections.emptyList());
         var entity = criarEntityCompleta(1L);
 
         var domain = gateway.toDomain(entity);

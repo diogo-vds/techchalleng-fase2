@@ -3,6 +3,7 @@ package com.postech.techchallenge.fase2.cardapio.infra.gateway;
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
 import com.postech.techchallenge.fase2.cardapio.infra.persistence.entity.CardapioEntity;
 import com.postech.techchallenge.fase2.cardapio.infra.persistence.repository.CardapioRepository;
+import com.postech.techchallenge.fase2.cardapio.infra.persistence.repository.ItemCardapioRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -10,7 +11,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -24,6 +25,9 @@ class CardapioGatewayImplTest {
     @Mock
     private CardapioRepository cardapioRepository;
 
+    @Mock
+    private ItemCardapioRepository itemCardapioRepository;
+
     @InjectMocks
     private CardapioGatewayImpl cardapioGateway;
 
@@ -36,22 +40,19 @@ class CardapioGatewayImplTest {
                 1L,
                 "X-Salada",
                 "Hamburguer",
-                new BigDecimal("20.00"),
-                false,
-                "/foto.jpg"
+                Collections.emptyList()
         );
 
         cardapioEntity = new CardapioEntity();
         cardapioEntity.setId(1L);
         cardapioEntity.setNome("X-Salada");
         cardapioEntity.setDescricao("Hamburguer");
-        cardapioEntity.setPreco(new BigDecimal("20.00"));
-        cardapioEntity.setDisponivelApenasRestaurante(false);
-        cardapioEntity.setCaminhoFoto("/foto.jpg");
+
     }
 
     @Test
     void deveSalvarCardapio() {
+        when(itemCardapioRepository.findByCardapioId(anyLong())).thenReturn(Collections.emptyList());
         when(cardapioRepository.save(any(CardapioEntity.class))).thenReturn(cardapioEntity);
 
         Cardapio resultado = cardapioGateway.salvar(cardapio);
@@ -64,6 +65,7 @@ class CardapioGatewayImplTest {
 
     @Test
     void deveBuscarCardapioPorId() {
+        when(itemCardapioRepository.findByCardapioId(anyLong())).thenReturn(Collections.emptyList());
         when(cardapioRepository.findById(1L)).thenReturn(Optional.of(cardapioEntity));
 
         Optional<Cardapio> resultado = cardapioGateway.buscarPorId(1L);
@@ -86,6 +88,7 @@ class CardapioGatewayImplTest {
 
     @Test
     void deveListarTodosCardapios() {
+        when(itemCardapioRepository.findByCardapioId(anyLong())).thenReturn(Collections.emptyList());
         when(cardapioRepository.findAll()).thenReturn(List.of(cardapioEntity));
 
         List<Cardapio> resultado = cardapioGateway.listarTodos();
@@ -110,12 +113,12 @@ class CardapioGatewayImplTest {
         Cardapio novoCardapio = Cardapio.criar(
                 "X-Salada",
                 "Hamburguer",
-                new BigDecimal("20.00"),
-                false,
-                "/foto.jpg"
+                Collections.emptyList()
         );
 
+        when(itemCardapioRepository.findByCardapioId(anyLong())).thenReturn(Collections.emptyList());
         when(cardapioRepository.save(any(CardapioEntity.class))).thenReturn(cardapioEntity);
+
 
         Cardapio resultado = cardapioGateway.salvar(novoCardapio);
 
@@ -128,9 +131,6 @@ class CardapioGatewayImplTest {
         CardapioEntity entitySemId = new CardapioEntity();
         entitySemId.setNome("X-Salada");
         entitySemId.setDescricao("Hamburguer");
-        entitySemId.setPreco(new BigDecimal("20.00"));
-        entitySemId.setDisponivelApenasRestaurante(false);
-        entitySemId.setCaminhoFoto("/foto.jpg");
 
         when(cardapioRepository.save(any(CardapioEntity.class))).thenReturn(entitySemId);
 

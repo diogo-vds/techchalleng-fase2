@@ -1,7 +1,6 @@
 package com.postech.techchallenge.fase2.cardapio.infra.controller;
 
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioInput;
-import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioInput;
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.usecase.*;
 import org.springframework.http.ResponseEntity;
@@ -47,6 +46,7 @@ public class CardapioController {
         CardapioInput inputComId = new CardapioInput(
                 id,
                 input.nome(),
+                input.descricao(),
                 input.itens()
         );
 

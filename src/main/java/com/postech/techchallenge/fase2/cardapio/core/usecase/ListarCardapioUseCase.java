@@ -2,7 +2,6 @@ package com.postech.techchallenge.fase2.cardapio.core.usecase;
 
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
-import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
 
 import java.util.List;
@@ -24,15 +23,8 @@ public class ListarCardapioUseCase {
                 .map(cardapio -> new CardapioOutput(
                         cardapio.getId(),
                         cardapio.getNome(),
-                        cardapio.getItens().stream().map(item -> new ItemCardapioOutput(
-                                item.getId(),
-                                item.getCardapioId(),
-                                item.getNome(),
-                                item.getDescricao(),
-                                item.getPreco(),
-                                item.getDisponivelApenasRestaurante(),
-                                item.getCaminhoFoto()
-                        )).collect(Collectors.toList())
+                        cardapio.getDescricao(),
+                        cardapio.getItens()
                 ))
                 .collect(Collectors.toList());
     }

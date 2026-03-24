@@ -4,7 +4,7 @@ import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
 import com.postech.techchallenge.fase2.endereco.core.domain.Endereco;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -21,9 +21,7 @@ class RestauranteTest {
         return Cardapio.criar(
                 "Pizza",
                 "Descrição",
-                new BigDecimal("50.00"),
-                true,
-                "/img.png"
+                Collections.emptyList()
         );
     }
 
@@ -106,9 +104,7 @@ class RestauranteTest {
         Cardapio novoCardapio = Cardapio.criar(
                 "Sushi",
                 "Descrição",
-                new BigDecimal("100.00"),
-                false,
-                "/sushi.png"
+                Collections.emptyList()
         );
 
         r.alterarDados(
