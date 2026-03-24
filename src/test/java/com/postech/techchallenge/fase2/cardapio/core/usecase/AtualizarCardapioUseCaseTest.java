@@ -1,7 +1,7 @@
 package com.postech.techchallenge.fase2.cardapio.core.usecase;
 
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
-import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioInput;
+import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioInput;
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
 import org.junit.jupiter.api.BeforeEach;
@@ -37,7 +37,7 @@ class AtualizarCardapioUseCaseTest {
                 "/foto.jpg"
         );
 
-        CardapioInput input = new CardapioInput(
+        ItemCardapioInput input = new ItemCardapioInput(
                 1L,
                 "Novo",
                 "Descricao Nova",
@@ -72,7 +72,7 @@ class AtualizarCardapioUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoCardapioNaoExistir() {
-        CardapioInput input = new CardapioInput(
+        ItemCardapioInput input = new ItemCardapioInput(
                 1L,
                 "Novo",
                 "Descricao Nova",
@@ -107,7 +107,7 @@ class AtualizarCardapioUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoIdForNulo() {
-        CardapioInput input = new CardapioInput(
+        ItemCardapioInput input = new ItemCardapioInput(
                 null,
                 "Novo",
                 "Descricao Nova",

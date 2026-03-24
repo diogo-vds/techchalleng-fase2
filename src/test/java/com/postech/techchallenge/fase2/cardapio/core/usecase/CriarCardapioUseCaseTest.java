@@ -1,7 +1,7 @@
 package com.postech.techchallenge.fase2.cardapio.core.usecase;
 
 import com.postech.techchallenge.fase2.cardapio.core.domain.Cardapio;
-import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioInput;
+import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioInput;
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
 import org.junit.jupiter.api.BeforeEach;
@@ -26,7 +26,7 @@ class CriarCardapioUseCaseTest {
 
     @Test
     void deveCriarCardapioComSucesso() {
-        CardapioInput input = new CardapioInput(
+        ItemCardapioInput input = new ItemCardapioInput(
                 null,
                 "X-Salada",
                 "Hamburguer com salada",
@@ -68,7 +68,7 @@ class CriarCardapioUseCaseTest {
 
     @Test
     void deveLancarExcecaoQuandoIdForInformadoNaCriacao() {
-        CardapioInput input = new CardapioInput(
+        ItemCardapioInput input = new ItemCardapioInput(
                 1L,
                 "X-Salada",
                 "Hamburguer com salada",

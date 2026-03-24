@@ -1,7 +1,7 @@
 package com.postech.techchallenge.fase2.cardapio.infra.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioInput;
+import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioInput;
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.usecase.*;
 import org.junit.jupiter.api.Test;
@@ -44,7 +44,7 @@ class CardapioControllerTest {
 
     @Test
     void deveCriarCardapio() throws Exception {
-        CardapioInput input = new CardapioInput(
+        ItemCardapioInput input = new ItemCardapioInput(
                 null, "Hamburguer", "Delicioso", new BigDecimal("25.00"), true, "/foto.jpg"
         );
 
@@ -86,7 +86,7 @@ class CardapioControllerTest {
 
     @Test
     void deveAtualizarCardapio() throws Exception {
-        CardapioInput input = new CardapioInput(
+        ItemCardapioInput input = new ItemCardapioInput(
                 null, "Hamburguer Atualizado", "Mais gostoso", new BigDecimal("30.00"), false, "/nova.jpg"
         );
 

@@ -1,7 +1,6 @@
 package com.postech.techchallenge.fase2.cardapio.infra.controller;
 
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioInput;
-import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioInput;
 import com.postech.techchallenge.fase2.cardapio.core.dto.CardapioOutput;
 import com.postech.techchallenge.fase2.cardapio.core.usecase.*;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/cardapio")
-public class CardapioController {
+public class ItemCardapioController {
 
     private final CriarCardapioUseCase criarCardapioUseCase;
     private final AtualizarCardapioUseCase atualizarCardapioUseCase;
@@ -19,7 +18,7 @@ public class CardapioController {
     private final BuscarCardapioPorIdUseCase buscarCardapioPorIdUseCase;
     private final ListarCardapioUseCase listarCardapioUseCase;
 
-    public CardapioController(
+    public ItemCardapioController(
             CriarCardapioUseCase criarCardapioUseCase,
             AtualizarCardapioUseCase atualizarCardapioUseCase,
             DeletarCardapioUseCase deletarCardapioUseCase,

@@ -14,18 +14,6 @@ public class CardapioEntity {
     @Column(nullable = false)
     private String nome;
 
-    @Column(nullable = false)
-    private String descricao;
-
-    @Column(nullable = false)
-    private BigDecimal preco;
-
-    @Column(nullable = false)
-    private Boolean disponivelApenasRestaurante;
-
-    @Column(nullable = false)
-    private String caminhoFoto;
-
     public Long getId() {
         return id;
     }
@@ -42,35 +30,4 @@ public class CardapioEntity {
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
-    }
-
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
-    }
-
-    public BigDecimal getPreco() {
-        return preco;
-    }
-
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
-    }
-
-    public Boolean getDisponivelApenasRestaurante() {
-        return disponivelApenasRestaurante;
-    }
-
-    public void setDisponivelApenasRestaurante(Boolean disponivelApenasRestaurante) {
-        this.disponivelApenasRestaurante = disponivelApenasRestaurante;
-    }
-
-    public String getCaminhoFoto() {
-        return caminhoFoto;
-    }
-
-    public void setCaminhoFoto(String caminhoFoto) {
-        this.caminhoFoto = caminhoFoto;
-    }
 }
