@@ -6,7 +6,7 @@ import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -25,8 +25,8 @@ class ListarCardapioUseCaseTest {
 
     @Test
     void deveListarCardapioComSucesso() {
-        Cardapio c1 = Cardapio.reconstruir(1L, "X-Salada", "Hamburguer", new BigDecimal("20.00"), false, "/f1.jpg");
-        Cardapio c2 = Cardapio.reconstruir(2L, "Coca-Cola", "Refrigerante", new BigDecimal("5.00"), false, "/f2.jpg");
+        Cardapio c1 = Cardapio.reconstruir(1L, "X-Salada", "Hamburguer", Collections.emptyList());
+        Cardapio c2 = Cardapio.reconstruir(2L, "Coca-Cola", "Refrigerante", Collections.emptyList());
 
         when(cardapioGateway.listarTodos()).thenReturn(List.of(c1, c2));
 

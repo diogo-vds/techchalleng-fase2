@@ -1,7 +1,6 @@
 package com.postech.techchallenge.fase2.cardapio.infra.persistence.entity;
 
 import jakarta.persistence.*;
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "cardapio")
@@ -16,15 +15,6 @@ public class CardapioEntity {
 
     @Column(nullable = false)
     private String descricao;
-
-    @Column(nullable = false)
-    private BigDecimal preco;
-
-    @Column(nullable = false)
-    private Boolean disponivelApenasRestaurante;
-
-    @Column(nullable = false)
-    private String caminhoFoto;
 
     public Long getId() {
         return id;
@@ -48,29 +38,5 @@ public class CardapioEntity {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public BigDecimal getPreco() {
-        return preco;
-    }
-
-    public void setPreco(BigDecimal preco) {
-        this.preco = preco;
-    }
-
-    public Boolean getDisponivelApenasRestaurante() {
-        return disponivelApenasRestaurante;
-    }
-
-    public void setDisponivelApenasRestaurante(Boolean disponivelApenasRestaurante) {
-        this.disponivelApenasRestaurante = disponivelApenasRestaurante;
-    }
-
-    public String getCaminhoFoto() {
-        return caminhoFoto;
-    }
-
-    public void setCaminhoFoto(String caminhoFoto) {
-        this.caminhoFoto = caminhoFoto;
     }
 }

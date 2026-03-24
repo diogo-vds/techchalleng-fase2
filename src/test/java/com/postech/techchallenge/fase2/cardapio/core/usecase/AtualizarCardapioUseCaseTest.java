@@ -8,7 +8,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
-import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -32,27 +32,21 @@ class AtualizarCardapioUseCaseTest {
                 1L,
                 "Antigo",
                 "Descricao Antiga",
-                new BigDecimal("10.00"),
-                false,
-                "/foto.jpg"
+                Collections.emptyList()
         );
 
         CardapioInput input = new CardapioInput(
                 1L,
                 "Novo",
                 "Descricao Nova",
-                new BigDecimal("15.00"),
-                true,
-                "/nova_foto.jpg"
+                Collections.emptyList()
         );
 
         Cardapio cardapioAtualizado = Cardapio.reconstruir(
                 1L,
                 "Novo",
                 "Descricao Nova",
-                new BigDecimal("15.00"),
-                true,
-                "/nova_foto.jpg"
+                Collections.emptyList()
         );
 
         when(cardapioGateway.buscarPorId(1L)).thenReturn(Optional.of(cardapioExistente));
@@ -64,7 +58,6 @@ class AtualizarCardapioUseCaseTest {
         assertEquals(1L, output.id());
         assertEquals("Novo", output.nome());
         assertEquals("Descricao Nova", output.descricao());
-        assertEquals(new BigDecimal("15.00"), output.preco());
 
         verify(cardapioGateway, times(1)).buscarPorId(1L);
         verify(cardapioGateway, times(1)).salvar(any(Cardapio.class));
@@ -76,9 +69,7 @@ class AtualizarCardapioUseCaseTest {
                 1L,
                 "Novo",
                 "Descricao Nova",
-                new BigDecimal("15.00"),
-                true,
-                "/nova_foto.jpg"
+                Collections.emptyList()
         );
 
         when(cardapioGateway.buscarPorId(1L)).thenReturn(Optional.empty());
@@ -111,9 +102,7 @@ class AtualizarCardapioUseCaseTest {
                 null,
                 "Novo",
                 "Descricao Nova",
-                new BigDecimal("15.00"),
-                true,
-                "/nova_foto.jpg"
+                Collections.emptyList()
         );
 
         IllegalArgumentException exception = assertThrows(

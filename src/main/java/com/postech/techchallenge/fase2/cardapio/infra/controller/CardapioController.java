@@ -47,9 +47,7 @@ public class CardapioController {
                 id,
                 input.nome(),
                 input.descricao(),
-                input.preco(),
-                input.disponivelApenasRestaurante(),
-                input.caminhoFoto()
+                input.itens()
         );
 
         CardapioOutput output = atualizarCardapioUseCase.executar(inputComId);

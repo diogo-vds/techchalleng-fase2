@@ -32,9 +32,7 @@ public class AtualizarCardapioUseCase {
                 cardapioExistente.getId(),
                 input.nome(),
                 input.descricao(),
-                input.preco(),
-                input.disponivelApenasRestaurante(),
-                input.caminhoFoto()
+                input.itens()
         );
 
         Cardapio salvo = cardapioGateway.salvar(cardapioAtualizado);
@@ -43,9 +41,6 @@ public class AtualizarCardapioUseCase {
                 salvo.getId(),
                 salvo.getNome(),
                 salvo.getDescricao(),
-                salvo.getPreco(),
-                salvo.getDisponivelApenasRestaurante(),
-                salvo.getCaminhoFoto()
-        );
+                salvo.getItens()        );
     }
 }

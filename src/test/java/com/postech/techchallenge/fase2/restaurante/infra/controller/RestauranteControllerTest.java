@@ -10,9 +10,8 @@ import org.junit.jupiter.api.Test;
 import org.mockito.*;
 
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 
-import java.math.BigDecimal;
+import java.util.Collections;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -38,7 +37,7 @@ class RestauranteControllerTest {
     }
 
     private Cardapio cardapio() {
-        return Cardapio.criar("Pizza", "Desc", new BigDecimal("10"), true, "/img");
+        return Cardapio.criar("Pizza", "Desc", Collections.emptyList());
     }
 
     private Restaurante restaurante() {

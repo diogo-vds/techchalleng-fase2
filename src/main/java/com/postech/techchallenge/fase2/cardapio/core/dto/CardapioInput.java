@@ -1,13 +1,13 @@
 package com.postech.techchallenge.fase2.cardapio.core.dto;
 
-import java.math.BigDecimal;
+import com.postech.techchallenge.fase2.cardapio.core.domain.ItemCardapio;
+
+import java.util.List;
 
 public record CardapioInput(
         Long id,
         String nome,
         String descricao,
-        BigDecimal preco,
-        Boolean disponivelApenasRestaurante,
-        String caminhoFoto
+        List<ItemCardapio> itens
 ) {
 }

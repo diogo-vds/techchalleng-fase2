@@ -7,7 +7,7 @@ import com.postech.techchallenge.fase2.cardapio.core.gateway.CardapioGateway;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import java.math.BigDecimal;
+import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -30,18 +30,14 @@ class CriarCardapioUseCaseTest {
                 null,
                 "X-Salada",
                 "Hamburguer com salada",
-                new BigDecimal("20.00"),
-                false,
-                "/fotos/xsalada.jpg"
+                Collections.emptyList()
         );
 
         Cardapio cardapioSalvo = Cardapio.reconstruir(
                 1L,
                 "X-Salada",
                 "Hamburguer com salada",
-                new BigDecimal("20.00"),
-                false,
-                "/fotos/xsalada.jpg"
+                Collections.emptyList()
         );
 
         when(cardapioGateway.salvar(any(Cardapio.class))).thenReturn(cardapioSalvo);
@@ -51,7 +47,6 @@ class CriarCardapioUseCaseTest {
         assertNotNull(output);
         assertEquals(1L, output.id());
         assertEquals("X-Salada", output.nome());
-        assertEquals(new BigDecimal("20.00"), output.preco());
         verify(cardapioGateway, times(1)).salvar(any(Cardapio.class));
     }
 
@@ -72,9 +67,7 @@ class CriarCardapioUseCaseTest {
                 1L,
                 "X-Salada",
                 "Hamburguer com salada",
-                new BigDecimal("20.00"),
-                false,
-                "/fotos/xsalada.jpg"
+                Collections.emptyList()
         );
 
         IllegalArgumentException exception = assertThrows(

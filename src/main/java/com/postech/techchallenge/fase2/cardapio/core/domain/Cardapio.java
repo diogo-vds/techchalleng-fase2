@@ -1,42 +1,32 @@
 package com.postech.techchallenge.fase2.cardapio.core.domain;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 public class Cardapio {
 
     private final Long id;
     private final String nome;
     private final String descricao;
-    private final BigDecimal preco;
-    private final Boolean disponivelApenasRestaurante;
-    private final String caminhoFoto;
+    private final List<ItemCardapio> itens;
 
-    private Cardapio(Long id, String nome, String descricao, BigDecimal preco, Boolean disponivelApenasRestaurante, String caminhoFoto) {
+    private Cardapio(Long id, String nome, String descricao, List<ItemCardapio> itens) {
         validarCampo(nome, "nome");
         validarCampo(descricao, "descrição");
-        validarCampo(caminhoFoto, "caminho da foto");
-
-        if (preco == null || preco.compareTo(BigDecimal.ZERO) < 0) {
-            throw new IllegalArgumentException("Preço inválido");
-        }
-
         this.id = id;
         this.nome = nome.trim();
         this.descricao = descricao.trim();
-        this.preco = preco;
-        this.disponivelApenasRestaurante = disponivelApenasRestaurante;
-        this.caminhoFoto = caminhoFoto.trim();
+        this.itens = itens;
     }
 
-    public static Cardapio criar(String nome, String descricao, BigDecimal preco, Boolean disponivelApenasRestaurante, String caminhoFoto) {
-        return new Cardapio(null, nome, descricao, preco, disponivelApenasRestaurante, caminhoFoto);
+    public static Cardapio criar(String nome, String descricao, List<ItemCardapio> itens) {
+        return new Cardapio(null, nome, descricao, itens);
     }
 
-    public static Cardapio reconstruir(Long id, String nome, String descricao, BigDecimal preco, Boolean disponivelApenasRestaurante, String caminhoFoto) {
+    public static Cardapio reconstruir(Long id, String nome, String descricao, List<ItemCardapio> itens) {
         if (id == null) {
             throw new IllegalArgumentException("Id não pode ser nulo na reconstrução");
         }
-        return new Cardapio(id, nome, descricao, preco, disponivelApenasRestaurante, caminhoFoto);
+        return new Cardapio(id, nome, descricao, itens);
     }
 
     private static void validarCampo(String valor, String campo) {
@@ -57,15 +47,7 @@ public class Cardapio {
         return descricao;
     }
 
-    public BigDecimal getPreco() {
-        return preco;
-    }
-
-    public Boolean getDisponivelApenasRestaurante() {
-        return disponivelApenasRestaurante;
-    }
-
-    public String getCaminhoFoto() {
-        return caminhoFoto;
+    public List<ItemCardapio> getItens() {
+        return itens;
     }
 }

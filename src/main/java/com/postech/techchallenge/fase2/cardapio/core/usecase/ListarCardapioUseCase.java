@@ -24,9 +24,7 @@ public class ListarCardapioUseCase {
                         cardapio.getId(),
                         cardapio.getNome(),
                         cardapio.getDescricao(),
-                        cardapio.getPreco(),
-                        cardapio.getDisponivelApenasRestaurante(),
-                        cardapio.getCaminhoFoto()
+                        cardapio.getItens()
                 ))
                 .collect(Collectors.toList());
     }

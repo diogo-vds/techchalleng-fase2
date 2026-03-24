@@ -26,9 +26,7 @@ public class CriarCardapioUseCase {
         Cardapio cardapio = Cardapio.criar(
                 input.nome(),
                 input.descricao(),
-                input.preco(),
-                input.disponivelApenasRestaurante(),
-                input.caminhoFoto()
+                input.itens()
         );
 
         Cardapio salvo = cardapioGateway.salvar(cardapio);
@@ -37,9 +35,7 @@ public class CriarCardapioUseCase {
                 salvo.getId(),
                 salvo.getNome(),
                 salvo.getDescricao(),
-                salvo.getPreco(),
-                salvo.getDisponivelApenasRestaurante(),
-                salvo.getCaminhoFoto()
+                salvo.getItens()
         );
     }
 }
