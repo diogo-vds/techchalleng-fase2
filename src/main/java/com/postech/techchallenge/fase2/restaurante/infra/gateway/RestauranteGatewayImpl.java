@@ -29,7 +29,13 @@ public class RestauranteGatewayImpl implements RestauranteGateway {
 
     @Override
     public Restaurante salvar(Restaurante restaurante) {
-        RestauranteEntity entity = new RestauranteEntity();
+        RestauranteEntity entity;
+        if (restaurante.getId() != null) {
+            entity = restauranteRepository.findById(restaurante.getId())
+                    .orElseThrow(() -> new IllegalArgumentException("Restaurante com ID " + restaurante.getId() + " não encontrado"));
+        }else {
+            entity = new RestauranteEntity();
+        }
         entity.setNome(restaurante.getNome());
         entity.setEndereco(toEntity(restaurante.getEndereco()));
         entity.setTipoCozinha(restaurante.getTipoCozinha());

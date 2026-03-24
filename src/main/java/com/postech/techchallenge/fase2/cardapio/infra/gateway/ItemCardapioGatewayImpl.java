@@ -2,7 +2,9 @@ package com.postech.techchallenge.fase2.cardapio.infra.gateway;
 
 import com.postech.techchallenge.fase2.cardapio.core.domain.ItemCardapio;
 import com.postech.techchallenge.fase2.cardapio.core.gateway.ItemCardapioGateway;
+import com.postech.techchallenge.fase2.cardapio.infra.persistence.entity.CardapioEntity;
 import com.postech.techchallenge.fase2.cardapio.infra.persistence.entity.ItemCardapioEntity;
+import com.postech.techchallenge.fase2.cardapio.infra.persistence.repository.CardapioRepository;
 import com.postech.techchallenge.fase2.cardapio.infra.persistence.repository.ItemCardapioRepository;
 import org.springframework.stereotype.Component;
 
@@ -13,9 +15,11 @@ import java.util.Optional;
 public class ItemCardapioGatewayImpl implements ItemCardapioGateway {
 
     private final ItemCardapioRepository itemCardapioRepository;
+    private final CardapioRepository cardapioRepository;
 
-    public ItemCardapioGatewayImpl(ItemCardapioRepository itemCardapioRepository) {
+    public ItemCardapioGatewayImpl(ItemCardapioRepository itemCardapioRepository, CardapioRepository cardapioRepository) {
         this.itemCardapioRepository = itemCardapioRepository;
+        this.cardapioRepository = cardapioRepository;
     }
 
     @Override
@@ -41,10 +45,12 @@ public class ItemCardapioGatewayImpl implements ItemCardapioGateway {
     }
 
     public ItemCardapioEntity toEntity(ItemCardapio item) {
+        CardapioEntity cardapio = cardapioRepository.findById(item.getCardapioId()).orElseThrow();
         ItemCardapioEntity entity = new ItemCardapioEntity();
         if (item.getId() != null) {
             entity.setId(item.getId());
         }
+        entity.setCardapio(cardapio);
         entity.setNome(item.getNome());
         entity.setDescricao(item.getDescricao());
         entity.setPreco(item.getPreco());

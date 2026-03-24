@@ -1,0 +1,44 @@
+package com.postech.techchallenge.fase2.cardapio.core.usecase;
+
+import com.postech.techchallenge.fase2.cardapio.core.domain.ItemCardapio;
+import com.postech.techchallenge.fase2.cardapio.core.dto.ItemCardapioOutput;
+import com.postech.techchallenge.fase2.cardapio.core.gateway.ItemCardapioGateway;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+
+import java.math.BigDecimal;
+import java.util.Optional;
+
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
+
+class BuscarItemCardapioPorIdUseCaseTest {
+
+    private ItemCardapioGateway gateway;
+    private BuscarItemCardapioPorIdUseCase useCase;
+
+    @BeforeEach
+    void setup() {
+        gateway = mock(ItemCardapioGateway.class);
+        useCase = new BuscarItemCardapioPorIdUseCase(gateway);
+    }
+
+    @Test
+    void deveBuscarItemPorId() {
+        ItemCardapio item = ItemCardapio.reconstruir(
+                1L, 1L, "Batata", "Desc", new BigDecimal("5.00"), true, "/foto.jpg");
+
+        when(gateway.buscarPorId(1L)).thenReturn(Optional.of(item));
+
+        ItemCardapioOutput output = useCase.executar(1L);
+
+        assertNotNull(output);
+        assertEquals(1L, output.id());
+    }
+
+    @Test
+    void deveLancarExcecaoQuandoItemNaoExistir() {
+        when(gateway.buscarPorId(1L)).thenReturn(Optional.empty());
+        assertThrows(IllegalArgumentException.class, () -> useCase.executar(1L));
+    }
+}
